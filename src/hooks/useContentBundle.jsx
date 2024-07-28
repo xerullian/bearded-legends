@@ -2,8 +2,10 @@ import { renderToString } from 'react-dom/server';
 import stringToTemplate from '@utils/stringToTemplate';
 import isComponent from '@utils/isComponent';
 import noop from '@utils/noop';
+import Logger from '@utils/Logger';
 
 export default function useContentBundle(...bundles) {
+  const logger = new Logger('useContentBundle');
   const lang = navigator.language;
 
   const bundle = bundles.reduce((result, bundle) => {
@@ -50,12 +52,7 @@ export default function useContentBundle(...bundles) {
         return target[prop];
       }
 
-      console.groupCollapsed(
-        `[useContentBundle] '${prop}' not found`,
-        ...bundles,
-      );
-      console.trace('Trace');
-      console.groupEnd();
+      logger.trace(`${prop} not found. Computed bundle`, bundle);
 
       return noop;
     },

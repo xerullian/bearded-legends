@@ -4,7 +4,7 @@ import content from '../../App.yaml';
 import * as styles from './Timer.css';
 
 export default function Timer({ className }) {
-  const b = useContentBundle(content);
+  const b = useContentBundle(content, { es: { GuildName: 'foo' } });
 
   return (
     <div className={`${className ?? ''} ${styles.Timer}`}>
