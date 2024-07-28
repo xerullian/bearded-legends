@@ -16,18 +16,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.module\.css$/,
+        test: /\.css$/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: '[name]-[hash:base64]',
               },
             },
           },
         ],
+      },
+      {
+        test: /\.ya?ml$/,
+        use: 'yaml-loader',
+        type: 'javascript/auto',
       },
       {
         test: /\.js|jsx$/,
@@ -53,6 +58,14 @@ module.exports = {
       ],
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components/'),
+      '@hooks': path.resolve(__dirname, 'src/hooks/'),
+      '@utils': path.resolve(__dirname, 'src/utils/'),
+    },
+  },
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'dist'),
