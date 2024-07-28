@@ -1,4 +1,9 @@
 module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -6,7 +11,14 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:prettier/recommended',
   ],
-  plugins: ['import'],
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+    requireConfigFile: false,
+    // babelOptions: ['@babel/preset-env', '@babel/preset-react'],
+  },
+  plugins: ['import', 'unused-imports'],
   rules: {
     'import/named': 'error',
     'import/default': 'error',
@@ -23,6 +35,7 @@ module.exports = {
         yml: 'never',
       },
     ],
+    'no-unused-vars': 'off',
     'prettier/prettier': [
       'error',
       {
@@ -34,8 +47,24 @@ module.exports = {
       },
     ],
     'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
+    ],
   },
-  Settings: {
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js',
+      },
+    },
     react: {
       version: 'detect',
     },

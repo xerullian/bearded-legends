@@ -1,15 +1,14 @@
 import React from 'react';
-import useContentBundle from '@hooks/useContentBundle.jsx';
-import contentBundle from '../../App.yaml';
+import useContentBundle from '@hooks/useContentBundle';
+import content from '../../App.yaml';
 import * as styles from './Timer.css';
 
 export default function Timer({ className }) {
-  const c = useContentBundle(contentBundle);
+  const b = useContentBundle(content);
 
   return (
     <div className={`${className ?? ''} ${styles.Timer}`}>
-      {/* <div>{c.Knighthood}</div> */}
-      {/* <div>{c.hour}</div> */}
+      <b.FooBar />
     </div>
   );
 }

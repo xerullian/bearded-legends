@@ -1,14 +1,14 @@
-import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import stringToTemplate from '@utils/stringToTemplate';
 import isComponent from '@utils/isComponent';
+import noop from '@utils/noop';
 
 export default function useContentBundle(...bundles) {
   const lang = navigator.language;
 
   const bundle = bundles.reduce((result, bundle) => {
     const en = bundle.en ?? {};
-    const locale = bundle[navigator.language] ?? {};
+    const locale = bundle[lang] ?? {};
 
     return {
       ...en,
@@ -27,10 +27,6 @@ export default function useContentBundle(...bundles) {
     return result;
   }, {});
 
-  function contentBundle(key, values) {
-    return contentBundle[key](values);
-  }
-
   function renderContent(string, props) {
     const values =
       props &&
@@ -46,5 +42,22 @@ export default function useContentBundle(...bundles) {
     return stringToTemplate(string, values);
   }
 
-  return Object.defineProperties(contentBundle, properties);
+  const contentBundle = Object.defineProperties({}, properties);
+
+  return new Proxy(contentBundle, {
+    get: function (target, prop) {
+      if (prop in target) {
+        return target[prop];
+      }
+
+      console.groupCollapsed(
+        `[useContentBundle] '${prop}' not found`,
+        ...bundles,
+      );
+      console.trace('Trace');
+      console.groupEnd();
+
+      return noop;
+    },
+  });
 }

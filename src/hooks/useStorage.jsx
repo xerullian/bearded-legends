@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import stringify from 'json-stable-stringify';
 
-export function useSessionStorage(key, value, initialValue = null) {
-  return useStorage(sessionStorage, ...args);
+export function useSessionStorage(key, initialValue = null) {
+  return useStorage(sessionStorage, key, initialValue);
 }
 
-export function useLocalStorage(key, value, initialValue = null) {
-  return useStorage(localStorage, ...args);
+export function useLocalStorage(key, initialValue = null) {
+  return useStorage(localStorage, key, initialValue);
 }
 
 function useStorage(storage, key, initialValue = null) {
