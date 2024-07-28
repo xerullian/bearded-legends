@@ -1,5 +1,7 @@
 import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
+import stringToTemplate from '@utils/stringToTemplate';
+import isComponent from '@utils/isComponent';
 
 export default function useContentBundle(...bundles) {
   const lang = navigator.language;
@@ -17,7 +19,7 @@ export default function useContentBundle(...bundles) {
 
   const properties = Object.entries(bundle).reduce((result, [key, string]) => {
     result[key] = {
-      get: () => (values) => render(string, values),
+      get: () => (values) => renderContent(string, values),
       configurable: false,
       enumerable: true,
     };
@@ -29,7 +31,7 @@ export default function useContentBundle(...bundles) {
     return contentBundle[key](values);
   }
 
-  function render(string, props) {
+  function renderContent(string, props) {
     const values =
       props &&
       Object.entries(props).reduce((results, [key, value]) => {
@@ -42,25 +44,6 @@ export default function useContentBundle(...bundles) {
       }, {});
 
     return stringToTemplate(string, values);
-  }
-
-  function stringToTemplate(string, values = {}) {
-    try {
-      const func = new Function(
-        ...Object.keys(values),
-        `return \`${string}\`;`,
-      );
-      return func(...Object.values(values));
-    } catch (e) {
-      return string;
-    }
-  }
-
-  function isComponent(object) {
-    return (
-      typeof object === 'function' ||
-      (typeof object === 'object' && object !== null && 'type' in object)
-    );
   }
 
   return Object.defineProperties(contentBundle, properties);
