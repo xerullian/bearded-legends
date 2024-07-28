@@ -17,6 +17,10 @@ export default function App(_props) {
         <b.WelcomeMessage place={<b.GameName />} />
       </p>
 
+      <p>
+        <b.Greeting name="World" />
+      </p>
+
       <Timer />
     </div>
   );

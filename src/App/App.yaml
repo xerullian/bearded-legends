@@ -1,4 +1,7 @@
 en:
+  Greeting: Hello, ${name}!
   GuildName: Bearded Legends
   GameName: Knighthood
   WelcomeMessage: Welcome to ${place}
+es:
+  Greeting: ¡Hola, ${name}!
