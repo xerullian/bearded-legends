@@ -1,0 +1,12 @@
+.Clock {
+  .Date {
+    font-family: troikaregular;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .Time {
+    font-family: troikaregular;
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+}

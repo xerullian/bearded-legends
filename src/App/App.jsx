@@ -1,8 +1,10 @@
 import React from 'react';
 import useContentBundle from '@hooks/useContentBundle';
 import * as styles from './App.css';
+import '@styles/Global.css';
 import content from './App.yaml';
 import Timer from './GuildWars/Timer/Timer';
+import Clock from './GuildWars/Clock/Clock';
 
 export default function App(_props) {
   const b = useContentBundle(content);
@@ -13,13 +15,7 @@ export default function App(_props) {
         <b.GuildName />
       </h1>
 
-      <p>
-        <b.WelcomeMessage place={<b.GameName />} />
-      </p>
-
-      <p>
-        <b.Greeting name="World" />
-      </p>
+      <Clock />
 
       <Timer />
     </div>

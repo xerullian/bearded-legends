@@ -23,7 +23,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]-[hash:base64:5]',
+                localIdentName: '[name]-[local]-[hash:base64:5]',
               },
             },
           },
@@ -55,6 +55,7 @@ module.exports = {
         { from: './site.webmanifest', to: './', context: 'public' },
         { from: './**/*.ico', to: './', context: 'public' },
         { from: './**/*.png', to: './', context: 'public' },
+        { from: './thirdparty/**/*.*', to: './', context: 'public' },
       ],
     }),
   ],
@@ -63,6 +64,7 @@ module.exports = {
     alias: {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
+      '@styles': path.resolve(__dirname, 'src/styles/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),
     },
   },
