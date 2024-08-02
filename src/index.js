@@ -4,4 +4,5 @@ import App from './App/App';
 
 const $root = document.querySelector('#root');
 const root = createRoot($root);
+
 root.render(<App />);

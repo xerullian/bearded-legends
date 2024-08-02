@@ -1,0 +1,9 @@
+en:
+  StartButtonLabel: Start
+  ResumeButtonLabel: Resume
+  PauseButtonLabel: Pause
+  ResetButtonLabel: Reset
+  MinutesAbbr: m
+  Minutes: minutes
+  SecondsAbbr: s
+  Seconds: seconds

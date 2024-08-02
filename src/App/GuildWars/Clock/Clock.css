@@ -1,12 +1,25 @@
 .Clock {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
   .Date {
-    font-family: troikaregular;
+    /* font-family: troikaregular; */
     margin: 0.5rem 0 0 0;
   }
 
   .Time {
-    font-family: troikaregular;
-    font-size: 4rem;
-    line-height: 4rem;
+    align-items: baseline;
+    display: flex;
+    /* font-family: troikaregular; */
+
+    .HoursMinutes {
+      font-size: 4rem;
+      line-height: 4rem;
+    }
+
+    .TimeZone {
+      font-size: 2rem;
+    }
   }
 }

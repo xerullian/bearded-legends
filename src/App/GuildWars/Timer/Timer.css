@@ -1,7 +1,62 @@
 .Timer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  abbr {
+    text-decoration: none;
+  }
+
   .Elapsed {
-    font-family: troikaregular;
-    font-size: 4rem;
+    align-items: baseline;
+    color: darkgray;
+    display: flex;
+    /* font-family: troikaregular; */
     line-height: 4rem;
+
+    .Minutes {
+      font-size: 4rem;
+    }
+
+    .Seconds {
+      font-size: 3rem;
+      margin: 0 0 0 0.5rem;
+    }
+
+    span {
+      font-size: 2rem;
+    }
+
+    &.Started {
+      color: black;
+    }
+
+    &.Paused {
+      color: slategray;
+    }
+
+    &.Warning {
+      color: darkorange;
+    }
+
+    &.Error {
+      color: red;
+    }
+  }
+
+  .Controls {
+    button {
+      background-color: transparent;
+      border: 0;
+      margin: 0 0 0 1rem;
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+      padding: 0;
+
+      svg {
+        height: 2.75rem;
+        width: 2.75rem;
+      }
+    }
   }
 }

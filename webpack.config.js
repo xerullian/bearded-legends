@@ -23,7 +23,8 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]-[local]-[hash:base64:5]',
+                localIdentName: 'BL-[local]',
+                //localIdentName: '[name]-[local]-[hash:base64:5]',
               },
             },
           },
@@ -49,13 +50,15 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      inlineSource: '.(js|css)$',
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './site.webmanifest', to: './', context: 'public' },
+        { from: './manifest.json', to: './', context: 'public' },
+        { from: './service-worker.js', to: './', context: 'public' },
         { from: './**/*.ico', to: './', context: 'public' },
         { from: './**/*.png', to: './', context: 'public' },
-        { from: './thirdparty/**/*.*', to: './', context: 'public' },
+        { from: './thirdparty/**/*', to: './', context: 'public' },
       ],
     }),
   ],

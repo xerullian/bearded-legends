@@ -1,60 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import useContentBundle from '@hooks/useContentBundle';
-import content from '../../App.yaml';
+import appContent from '../../App.yaml';
 import * as styles from './Timer.css';
-import { useSessionStorage } from '../../../hooks/useStorage';
+import * as animation from '@styles/Animation.css';
+import * as a11y from '@styles/Accessibility.css';
+import { useLocalStorage } from '../../../hooks/useStorage';
 import Logger from '@utils/Logger';
 import useInterval from '../../../hooks/useInterval';
 import Card from '../../../components/Card';
+import content from './Timer.yaml';
+import useSwipe from '../../../hooks/useSwipe';
+import {
+  PauseCircle,
+  PauseFill,
+  PlayCircle,
+  StopCircle,
+} from 'react-bootstrap-icons';
 
-export default function Timer({ className }) {
-  const logger = new Logger('Timer');
-  const b = useContentBundle(content, { es: { GuildName: 'foo' } });
-  const [tick, start, stop] = useInterval();
-  const [elapsedMillis, setElapsedMillis] = useState(0);
-  const [remainingMillis, setRemainingMillis] = useState(0);
+// const DEFAULT_REMAINING_MILLIS = 10_000;
+const DEFAULT_REMAINING_MILLIS = 1_800_000;
 
-  const [value, _setValue, _updateValue, _removeValue] = useSessionStorage(
-    'BL.Timer',
-    {
-      foo: 'FOO',
-      bar: 'BAR',
-    },
+// FIXME auto generate ID if one is not provided
+
+export default function Timer({ id, className }) {
+  const _logger = new Logger('Timer');
+  const b = useContentBundle(appContent, content);
+  const [ref, swipe] = useSwipe();
+  const [tick, start, stop] = useInterval({ strict: false });
+  const [{ minutes, seconds }, setDisplay] = useState({});
+
+  const [remainingMillis, setRemainingMillis] = useState(
+    DEFAULT_REMAINING_MILLIS,
   );
 
-  const [startTimestamp, setStartTimestamp] = useState(0);
-  const [pauseTimestamp, setPauseTimestamp] = useState(0);
-
-  useEffect(() => {
-    logger.log('BL.Timer', value);
-  }, [value]);
+  const [{ startTimestamp, pauseTimestamp }, setTimestamp] = useLocalStorage(
+    `BL.Timer.${id}`,
+    {
+      startTimestamp: 0,
+      pauseTimestamp: 0,
+    },
+  );
 
   const onClickStartButton = (_domEvent) => {
     onClickResetButton();
     start();
-    setStartTimestamp(Date.now());
+    setTimestamp({ startTimestamp: Date.now(), pauseTimestamp });
   };
 
   const onClickPauseButton = (_domEvent) => {
     if (!pauseTimestamp) {
       stop();
-      setPauseTimestamp(Date.now());
+      setTimestamp({ startTimestamp, pauseTimestamp: Date.now() });
     }
   };
 
   const onClickResumeButton = (_domEvent) => {
     if (pauseTimestamp) {
-      setStartTimestamp(startTimestamp + Date.now() - pauseTimestamp);
+      const _startTimestamp = startTimestamp + Date.now() - pauseTimestamp;
+
+      setTimestamp({
+        startTimestamp: _startTimestamp,
+        pauseTimestamp: 0,
+      });
+
       start();
-      setPauseTimestamp(0);
+
+      setTimestamp({ startTimestamp: _startTimestamp, pauseTimestamp: 0 });
     }
   };
 
   const onClickResetButton = (_domEvent) => {
     stop();
-    setStartTimestamp(0);
-    setPauseTimestamp(0);
-    setElapsedMillis(0);
+    setTimestamp({ startTimestamp: 0, pauseTimestamp: 0 });
+    setRemainingMillis(DEFAULT_REMAINING_MILLIS);
   };
 
   const onClickSuperButton = (_domEvent) => {
@@ -68,36 +86,108 @@ export default function Timer({ className }) {
   };
 
   useEffect(() => {
+    if (pauseTimestamp) {
+      // Had the timer been paused prior to browser refresh, we should adjust
+      // the paused timing so that the start/pause timestamps are relevant.
+      const now = Date.now();
+      const elapsed = now - pauseTimestamp;
+
+      setTimestamp({
+        startTimestamp: startTimestamp + elapsed,
+        pauseTimestamp: now,
+      });
+    } else if (startTimestamp) {
+      // Had the timer been running when browser was refreshed, we should
+      // pick up where we originally left off.
+      start();
+    }
+  }, []);
+
+  useEffect(() => {
     if (startTimestamp) {
-      setElapsedMillis(Date.now() - startTimestamp);
-      setRemainingMillis(1_800_000 - elapsedMillis);
+      const elapsedMillis = Date.now() - startTimestamp;
+      setRemainingMillis(DEFAULT_REMAINING_MILLIS - elapsedMillis);
     }
   }, [tick]);
 
-  const format = (remainingMillis) => {
-    const remainingSeconds = Math.floor(remainingMillis / 1000);
-    const remainingMinutes = Math.floor(remainingSeconds / 60);
-    const pad = (number) => String(number).padStart(2, '0');
-    return `${pad(remainingMinutes)}:${pad(remainingSeconds % 60)}`;
-  };
+  useEffect(() => {
+    if (remainingMillis > 0) {
+      setDisplay({
+        minutes: Math.floor(remainingMillis / 60_000),
+        seconds: Math.abs(Math.floor((remainingMillis % 60_000) / 1000)),
+      });
+    } else {
+      setDisplay({
+        minutes: Math.abs(Math.ceil(remainingMillis / 60_000)),
+        seconds: Math.abs(Math.floor((remainingMillis % 60_000) / 1000)),
+      });
+    }
+  }, [remainingMillis]);
 
+  // FIXME header
   return (
-    <div className={`${className ?? ''} ${styles.Timer}`}>
-      <Card header="Timer">
-        <div className={styles.Elapsed}>{format(remainingMillis)}</div>
-
-        <button type="button" onClick={onClickSuperButton}>
-          {!startTimestamp
-            ? 'Start'
-            : startTimestamp && pauseTimestamp
-              ? 'Resume'
-              : 'Pause'}
-        </button>
-
-        <button type="button" onClick={onClickResetButton}>
-          Reset
-        </button>
-      </Card>
-    </div>
+    <Card>
+      <div className={[className, styles.Timer].cleanJoin()} ref={ref}>
+        <div
+          className={[
+            styles.Elapsed,
+            startTimestamp && styles.Started,
+            pauseTimestamp && styles.Paused,
+            remainingMillis < 240_000 && styles.Warning,
+            remainingMillis < 120_000 && styles.Error,
+            remainingMillis < 0 && animation.Blink,
+          ].cleanJoin()}
+        >
+          <div className={[styles.Minutes].cleanJoin()}>
+            {minutes}
+            <span>
+              <abbr title={b.Minutes()}>
+                <b.MinutesAbbr />
+              </abbr>
+            </span>
+          </div>
+          <div className={[styles.Seconds].cleanJoin()}>
+            {seconds}
+            <span>
+              <abbr title={b.Seconds()}>
+                <b.SecondsAbbr />
+              </abbr>
+            </span>
+          </div>
+        </div>
+        <div className={styles.Controls}>
+          <button type="button" onClick={onClickSuperButton}>
+            {!startTimestamp ? (
+              <>
+                <PlayCircle />
+                <span className={a11y.srOnly}>
+                  <b.StartButtonLabel />
+                </span>
+              </>
+            ) : startTimestamp && pauseTimestamp ? (
+              <>
+                <PlayCircle />
+                <span className={a11y.srOnly}>
+                  <b.ResumeButtonLabel />
+                </span>
+              </>
+            ) : (
+              <>
+                <PauseCircle />
+                <span className={a11y.srOnly}>
+                  <b.PauseButtonLabel />
+                </span>
+              </>
+            )}
+          </button>
+          <button type="button" onClick={onClickResetButton}>
+            <StopCircle />
+            <span className={a11y.srOnly}>
+              <b.ResetButtonLabel />
+            </span>
+          </button>
+        </div>
+      </div>
+    </Card>
   );
 }

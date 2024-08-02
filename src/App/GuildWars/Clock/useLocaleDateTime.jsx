@@ -7,6 +7,7 @@ export default function useFormatDateTime({
   minute,
   second,
   hour12,
+  timeZoneName,
 }) {
   const { format } = new Intl.DateTimeFormat(navigator.language, {
     timeZone,
@@ -17,6 +18,7 @@ export default function useFormatDateTime({
     minute,
     second,
     hour12,
+    timeZoneName,
   });
 
   return [format];

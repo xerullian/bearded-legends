@@ -1,5 +1,6 @@
-@import '../styles/Global.css';
+@import '@styles/Accessibility.css';
+@import '@styles/Animation.css';
 
 .App {
-  font-family: Sans-Serif;
+  /* font-family: Sans-Serif; */
 }

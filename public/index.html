@@ -7,7 +7,7 @@
     <title>Bearded Legends</title>
 
     <!-- favicon and webmanifest -->
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <!-- Android -->
@@ -31,11 +31,18 @@
       href="/icons/apple-touch-icon.png"
     />
 
-    <!-- fonts -->
-    <link
-      rel="stylesheet"
-      href="/thirdparty/joelcarrouche.com/troika-fontfacekit/web fonts/troika_regular_macroman/stylesheet.css"
-    />
+    <style>
+      html {
+        font-family: monospace;
+        font-size: 16px; /* 1rem = 16px by default */
+      }
+
+      @media (max-width: 360px) {
+        html {
+          font-size: 14px; /* 1rem = 14px */
+        }
+      }
+    </style>
   </head>
   <body class="BL">
     <div id="root"></div>

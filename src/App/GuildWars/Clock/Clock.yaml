@@ -1,2 +1,3 @@
 en:
   CurrentTimeMessage: Current time in ${timeZone}
+  CLOCK_FORMAT: ${HH}:${mm} ${timeZone}

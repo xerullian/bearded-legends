@@ -3,12 +3,10 @@ import * as styles from './Clock.css';
 import useInterval from '@hooks/useInterval';
 import useContentBundle from '@hooks/useContentBundle';
 import content from './Clock.yaml';
-import Card from '../../../components/Card';
-import useFormatDateTime from './useLocaleDate';
+import useFormatDateTime from './useLocaleDateTime';
 
-export default function Clock(props) {
-  const { timeZone = 'UTC' } = props;
-  const [tick, start] = useInterval();
+export default function Clock({ className, timeZone = 'UTC' }) {
+  const [tick, start] = useInterval({ strict: true });
   const [now, setNow] = useState(Date.now());
   const b = useContentBundle(content);
 
@@ -23,7 +21,7 @@ export default function Clock(props) {
     timeZone,
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
+    // second: '2-digit',
     hour12: false,
   });
 
@@ -31,11 +29,14 @@ export default function Clock(props) {
   useEffect(() => setNow(Date.now()), [tick]);
 
   return (
-    <div className={styles.Clock}>
-      <Card header={<b.CurrentTimeMessage timeZone={timeZone} />}>
+    <div className={[className, styles.Clock].cleanJoin()}>
+      <div>
         <div className={styles.Date}>{formatDate(now)}</div>
-        <div className={styles.Time}>{formatTime(now)}</div>
-      </Card>
+        <div className={styles.Time}>
+          <div className={styles.HoursMinutes}>{formatTime(now)}</div>
+          <div className={styles.TimeZone}>{timeZone}</div>
+        </div>
+      </div>
     </div>
   );
 }

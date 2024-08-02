@@ -1,21 +1,33 @@
 import { useState } from 'react';
 
-export default function useInterval(delay = 1000) {
-  const [tick, setTick] = useState(0);
+export default function useInterval({ delay = 1000, strict = false } = {}) {
+  const [tid, setTid] = useState(0);
+  const [tick, setTick] = useState(false);
+
+  const getDelay = () => {
+    if (strict) {
+      return delay - (Date.now() % delay);
+    }
+
+    return delay;
+  };
 
   const next = () => {
-    return setTick(setTimeout(next, delay));
+    setTick((x) => !x);
+
+    setTid(
+      setTimeout(() => {
+        next();
+      }, getDelay()),
+    );
   };
 
   const stop = () => {
-    if (tick) {
-      clearTimeout(tick);
-      setTick(0);
-    }
+    clearTimeout(tid);
   };
 
   const start = () => {
-    stop();
+    clearTimeout(tid);
     next();
   };
 

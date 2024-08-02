@@ -6,7 +6,7 @@ export function useSessionStorage(key, initialValue = null) {
 }
 
 export function useLocalStorage(key, initialValue = null) {
-  return useStorage(sessionStorage, key, initialValue);
+  return useStorage(localStorage, key, initialValue);
 }
 
 /**

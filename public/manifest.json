@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "short_name": "",
+  "short_name": "Bearded Legends",
+  "name": "Bearded Legends",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png",
@@ -15,5 +15,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait"
 }
