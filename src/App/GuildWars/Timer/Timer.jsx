@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useContentBundle from '@hooks/useContentBundle';
 import appContent from '../../App.yaml';
-import * as styles from './Timer.css';
-import * as animation from '@styles/Animation.css';
-import * as a11y from '@styles/Accessibility.css';
+import * as styles from './Timer.scss';
+import * as animation from '@styles/Animation.scss';
 import { useLocalStorage } from '../../../hooks/useStorage';
 import Logger from '@utils/Logger';
 import useInterval from '../../../hooks/useInterval';
@@ -17,6 +16,7 @@ import {
   StopCircle,
 } from 'react-bootstrap-icons';
 import { SrOnly } from '@components/SrOnly';
+import { pack } from '@utils/Arrays';
 
 // const DEFAULT_REMAINING_MILLIS = 10_000;
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
@@ -129,18 +129,18 @@ export default function Timer({ id, className }) {
   // FIXME header
   return (
     <Card>
-      <div className={[className, styles.Timer].cleanJoin()} ref={ref}>
+      <div className={pack(className, styles.Timer).join(' ')} ref={ref}>
         <div
-          className={[
+          className={pack(
             styles.Elapsed,
             startTimestamp && styles.Started,
             pauseTimestamp && styles.Paused,
             remainingMillis < 240_000 && styles.Warning,
             remainingMillis < 120_000 && styles.Expiring,
             remainingMillis < 0 && animation.Blink,
-          ].cleanJoin()}
+          ).join(' ')}
         >
-          <div className={[styles.Minutes].cleanJoin()}>
+          <div className={styles.Minutes}>
             {minutes}
             <span>
               <abbr title={b.Minutes()}>
@@ -148,7 +148,7 @@ export default function Timer({ id, className }) {
               </abbr>
             </span>
           </div>
-          <div className={[styles.Seconds].cleanJoin()}>
+          <div className={styles.Seconds}>
             {seconds}
             <span>
               <abbr title={b.Seconds()}>
@@ -169,9 +169,9 @@ export default function Timer({ id, className }) {
             ) : !startTimestamp ? (
               <>
                 <PlayCircle />
-                <span className={a11y.SrOnly}>
+                <SrOnly>
                   <b.StartButtonLabel />
-                </span>
+                </SrOnly>
               </>
             ) : (
               <>

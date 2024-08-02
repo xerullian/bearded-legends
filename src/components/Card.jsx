@@ -1,10 +1,9 @@
 import React from 'react';
-import * as styles from './Card.css';
+import * as styles from './Card.scss';
+import { pack } from '@utils/Arrays';
 
 export default function Card({ className, children }) {
   return (
-    <div className={[className, styles.Card].cleanJoin()}>
-      <div className={styles.Body}>{children}</div>
-    </div>
+    <div className={pack(className, styles.Card).join(' ')}>{children}</div>
   );
 }

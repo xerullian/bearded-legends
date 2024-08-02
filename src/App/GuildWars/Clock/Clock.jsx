@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import * as styles from './Clock.css';
+import * as styles from './Clock.scss';
 import useInterval from '@hooks/useInterval';
 import useContentBundle from '@hooks/useContentBundle';
 import content from './Clock.yaml';
 import useFormatDateTime from './useLocaleDateTime';
+import { pack } from '@utils/Arrays';
 
 export default function Clock({ className, timeZone = 'UTC' }) {
   const [tick, start] = useInterval({ strict: true });
@@ -29,7 +30,7 @@ export default function Clock({ className, timeZone = 'UTC' }) {
   useEffect(() => setNow(Date.now()), [tick]);
 
   return (
-    <div className={[className, styles.Clock].cleanJoin()}>
+    <div className={pack(className, styles.Clock).join(' ')}>
       <div>
         <div className={styles.Date}>{formatDate(now)}</div>
         <div className={styles.Time}>

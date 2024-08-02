@@ -1,7 +1,7 @@
-@import '@styles/Accessibility.css';
-@import '@styles/Animation.css';
-@import '@styles/Typography.css';
-@import '@styles/Color.css';
+@import '@styles/Accessibility.scss';
+@import '@styles/Animation.scss';
+@import '@styles/Typography.scss';
+@import '@styles/Color.scss';
 
 .Timer {
   align-items: center;
@@ -15,8 +15,8 @@
 
 .Elapsed {
   composes:
-    Monospace from '@styles/Typography.css',
-    Inactive from '@styles/Color.css';
+    Monospace from '@styles/Typography.scss',
+    Inactive from '@styles/Color.scss';
   align-items: baseline;
   display: flex;
   line-height: 4rem;
@@ -36,19 +36,19 @@
 }
 
 .Started {
-  composes: Normal from '@styles/Color.css';
+  composes: Normal from '@styles/Color.scss';
 }
 
 .Paused {
-  composes: Inactive from '@styles/Color.css';
+  composes: Inactive from '@styles/Color.scss';
 }
 
 .Warning {
-  composes: Warning from '@styles/Color.css';
+  composes: Warning from '@styles/Color.scss';
 }
 
 .Expiring {
-  composes: Error from '@styles/Color.css';
+  composes: Error from '@styles/Color.scss';
 }
 
 .Controls {
