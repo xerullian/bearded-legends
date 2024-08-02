@@ -1,3 +1,8 @@
+@import '@styles/Accessibility.css';
+@import '@styles/Animation.css';
+@import '@styles/Typography.css';
+@import '@styles/Color.css';
+
 .Timer {
   align-items: center;
   display: flex;
@@ -6,57 +11,59 @@
   abbr {
     text-decoration: none;
   }
+}
 
-  .Elapsed {
-    align-items: baseline;
-    color: darkgray;
-    display: flex;
-    /* font-family: troikaregular; */
-    line-height: 4rem;
+.Elapsed {
+  composes:
+    Monospace from '@styles/Typography.css',
+    Inactive from '@styles/Color.css';
+  align-items: baseline;
+  display: flex;
+  line-height: 4rem;
 
-    .Minutes {
-      font-size: 4rem;
-    }
-
-    .Seconds {
-      font-size: 3rem;
-      margin: 0 0 0 0.5rem;
-    }
-
-    span {
-      font-size: 2rem;
-    }
-
-    &.Started {
-      color: black;
-    }
-
-    &.Paused {
-      color: slategray;
-    }
-
-    &.Warning {
-      color: darkorange;
-    }
-
-    &.Error {
-      color: red;
-    }
+  .Minutes {
+    font-size: 4rem;
   }
 
-  .Controls {
-    button {
-      background-color: transparent;
-      border: 0;
-      margin: 0 0 0 1rem;
-      min-height: 2.75rem;
-      min-width: 2.75rem;
-      padding: 0;
+  .Seconds {
+    font-size: 3rem;
+    :width:;
+    margin: 0 0 0 0.5rem;
+  }
 
-      svg {
-        height: 2.75rem;
-        width: 2.75rem;
-      }
+  span {
+    font-size: 2rem;
+  }
+}
+
+.Started {
+  composes: Normal from '@styles/Color.css';
+}
+
+.Paused {
+  composes: Inactive from '@styles/Color.css';
+}
+
+.Warning {
+  composes: Warning from '@styles/Color.css';
+}
+
+.Expiring {
+  composes: Error from '@styles/Color.css';
+}
+
+.Controls {
+  button {
+    background-color: transparent;
+    border: 0;
+    margin: 0 0 0 1rem;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0;
+
+    svg {
+      height: 2.75rem;
+      width: 2.75rem;
     }
   }
 }

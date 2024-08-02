@@ -23,8 +23,8 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: 'BL-[local]',
-                //localIdentName: '[name]-[local]-[hash:base64:5]',
+                // localIdentName: 'BL-[local]',
+                localIdentName: '[name]-[local]-[hash:base64:5]',
               },
             },
           },

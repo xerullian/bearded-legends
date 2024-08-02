@@ -16,6 +16,7 @@ import {
   PlayCircle,
   StopCircle,
 } from 'react-bootstrap-icons';
+import { SrOnly } from '@components/SrOnly';
 
 // const DEFAULT_REMAINING_MILLIS = 10_000;
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
@@ -135,7 +136,7 @@ export default function Timer({ id, className }) {
             startTimestamp && styles.Started,
             pauseTimestamp && styles.Paused,
             remainingMillis < 240_000 && styles.Warning,
-            remainingMillis < 120_000 && styles.Error,
+            remainingMillis < 120_000 && styles.Expiring,
             remainingMillis < 0 && animation.Blink,
           ].cleanJoin()}
         >
@@ -161,31 +162,31 @@ export default function Timer({ id, className }) {
             {pauseTimestamp ? (
               <>
                 <PlayCircle />
-                <span className={a11y.srOnly}>
+                <SrOnly>
                   <b.ResumeButtonLabel />
-                </span>
+                </SrOnly>
               </>
             ) : !startTimestamp ? (
               <>
                 <PlayCircle />
-                <span className={a11y.srOnly}>
+                <span className={a11y.SrOnly}>
                   <b.StartButtonLabel />
                 </span>
               </>
             ) : (
               <>
                 <PauseCircle />
-                <span className={a11y.srOnly}>
+                <SrOnly>
                   <b.PauseButtonLabel />
-                </span>
+                </SrOnly>
               </>
             )}
           </button>
           <button type="button" onClick={onClickResetButton}>
             <StopCircle />
-            <span className={a11y.srOnly}>
+            <SrOnly>
               <b.ResetButtonLabel />
-            </span>
+            </SrOnly>
           </button>
         </div>
       </div>

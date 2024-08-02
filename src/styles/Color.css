@@ -1,0 +1,15 @@
+.Normal {
+  color: black;
+}
+
+.Inactive {
+  color: slategray;
+}
+
+.Warning {
+  color: darkorange;
+}
+
+.Error {
+  color: red;
+}
