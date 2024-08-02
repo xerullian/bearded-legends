@@ -105,10 +105,11 @@ export default function Timer({ id, className }) {
 
   useEffect(() => {
     if (startTimestamp) {
-      const elapsedMillis = Date.now() - startTimestamp;
+      const now = pauseTimestamp || Date.now();
+      const elapsedMillis = now - startTimestamp;
       setRemainingMillis(DEFAULT_REMAINING_MILLIS - elapsedMillis);
     }
-  }, [tick]);
+  }, [tick, startTimestamp, pauseTimestamp]);
 
   useEffect(() => {
     if (remainingMillis > 0) {
