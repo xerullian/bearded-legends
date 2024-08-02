@@ -157,18 +157,18 @@ export default function Timer({ id, className }) {
         </div>
         <div className={styles.Controls}>
           <button type="button" onClick={onClickSuperButton}>
-            {!startTimestamp ? (
-              <>
-                <PlayCircle />
-                <span className={a11y.srOnly}>
-                  <b.StartButtonLabel />
-                </span>
-              </>
-            ) : startTimestamp && pauseTimestamp ? (
+            {pauseTimestamp ? (
               <>
                 <PlayCircle />
                 <span className={a11y.srOnly}>
                   <b.ResumeButtonLabel />
+                </span>
+              </>
+            ) : !startTimestamp ? (
+              <>
+                <PlayCircle />
+                <span className={a11y.srOnly}>
+                  <b.StartButtonLabel />
                 </span>
               </>
             ) : (
