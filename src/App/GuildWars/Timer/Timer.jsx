@@ -1,10 +1,10 @@
+import Flex from '@components/Flex';
 import { SrOnly } from '@components/SrOnly';
 import useContentBundle from '@hooks/useContentBundle';
-// import * as animation from '@styles/Animation.scss';
 import { pack } from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import { PauseCircle, PlayCircle, StopCircle } from 'react-bootstrap-icons';
+import { PauseFill, PlayFill, XSquare } from 'react-bootstrap-icons';
 import Card from '../../../components/Card';
 import useInterval from '../../../hooks/useInterval';
 import { useLocalStorage } from '../../../hooks/useStorage';
@@ -12,10 +12,10 @@ import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
 import * as styles from './Timer.scss';
 import content from './Timer.yaml';
-import TimerDisplay from './TimerDisplay';
 import TimerControl from './TimerControl';
+import TimerDisplay from './TimerDisplay';
+import TimerLabel from './TimerLabel';
 
-// const DEFAULT_REMAINING_MILLIS = 10_000;
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
 
 // FIXME auto generate ID if one is not provided
@@ -31,24 +31,35 @@ export default function Timer({ id, className }) {
     DEFAULT_REMAINING_MILLIS,
   );
 
-  const [{ startTimestamp, pauseTimestamp }, setTimestamp] = useLocalStorage(
-    `BL.Timer.${id}`,
-    {
-      startTimestamp: 0,
-      pauseTimestamp: 0,
-    },
-  );
+  const [timestamp, setTimestamp] = useLocalStorage(`BL.Timer.${id}`, {
+    name: '',
+    startTimestamp: 0,
+    pauseTimestamp: 0,
+  });
+
+  const { name, startTimestamp, pauseTimestamp } = timestamp;
+
+  const setName = (name) => {
+    setTimestamp({
+      ...timestamp,
+      name,
+    });
+  };
 
   const onClickStartButton = (_domEvent) => {
     onClickResetButton();
     start();
-    setTimestamp({ startTimestamp: Date.now(), pauseTimestamp });
+
+    setTimestamp({
+      ...timestamp,
+      startTimestamp: Date.now(),
+    });
   };
 
   const onClickPauseButton = (_domEvent) => {
     if (!pauseTimestamp) {
       stop();
-      setTimestamp({ startTimestamp, pauseTimestamp: Date.now() });
+      setTimestamp({ ...timestamp, pauseTimestamp: Date.now() });
     }
   };
 
@@ -57,19 +68,24 @@ export default function Timer({ id, className }) {
       const _startTimestamp = startTimestamp + Date.now() - pauseTimestamp;
 
       setTimestamp({
+        ...timestamp,
         startTimestamp: _startTimestamp,
         pauseTimestamp: 0,
       });
 
       start();
 
-      setTimestamp({ startTimestamp: _startTimestamp, pauseTimestamp: 0 });
+      setTimestamp({
+        ...timestamp,
+        startTimestamp: _startTimestamp,
+        pauseTimestamp: 0,
+      });
     }
   };
 
   const onClickResetButton = (_domEvent) => {
     stop();
-    setTimestamp({ startTimestamp: 0, pauseTimestamp: 0 });
+    setTimestamp({ ...timestamp, startTimestamp: 0, pauseTimestamp: 0 });
     setRemainingMillis(DEFAULT_REMAINING_MILLIS);
   };
 
@@ -91,6 +107,7 @@ export default function Timer({ id, className }) {
       const elapsed = now - pauseTimestamp;
 
       setTimestamp({
+        ...timestamp,
         startTimestamp: startTimestamp + elapsed,
         pauseTimestamp: now,
       });
@@ -135,11 +152,9 @@ export default function Timer({ id, className }) {
 
   // FIXME header
   return (
-    <Card>
+    <Card className={pack(className, styles.Timer).join(' ')}>
       <div
         className={pack(
-          className,
-          styles.Timer,
           pauseTimestamp && styles.Paused,
           startTimestamp && styles.Started,
           !startTimestamp && styles.Paused,
@@ -149,25 +164,53 @@ export default function Timer({ id, className }) {
         ).join(' ')}
         ref={ref}
       >
-        <TimerControl
-          id={id}
-          className={styles.Control}
-          startTimestamp={startTimestamp}
-          pauseTimestamp={pauseTimestamp}
-          onClickSuperButton={onClickSuperButton}
-          onClickResetButton={onClickResetButton}
+        <TimerLabel
+          className={styles.Label}
+          name={name}
+          dataListId="nodeNames"
+          setName={setName}
         />
 
-        <TimerDisplay
-          className={styles.Display}
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-        />
-      </div>
-
-      <div>
-        <input value="Graypen Jetty"></input>
+        <Flex>
+          <TimerControl onClick={onClickSuperButton}>
+            {pauseTimestamp ? (
+              <>
+                <PlayFill />
+                <SrOnly>
+                  <b.ResumeButtonLabel />
+                </SrOnly>
+              </>
+            ) : !startTimestamp ? (
+              <>
+                <PlayFill />
+                <SrOnly>
+                  <b.StartButtonLabel />
+                </SrOnly>
+              </>
+            ) : (
+              <>
+                <PauseFill />
+                <SrOnly>
+                  <b.PauseButtonLabel />
+                </SrOnly>
+              </>
+            )}
+          </TimerControl>
+          <TimerDisplay
+            className={styles.Display}
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+          />
+          {!!pauseTimestamp && (
+            <TimerControl onClick={onClickResetButton}>
+              <XSquare />
+              <SrOnly>
+                <b.ResetButtonLabel />
+              </SrOnly>
+            </TimerControl>
+          )}
+        </Flex>
       </div>
     </Card>
   );

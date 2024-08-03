@@ -2,18 +2,14 @@
   button {
     background-color: transparent;
     border: 0;
-    margin: 0 0 0 0.5rem;
+    color: inherit;
     min-height: 2.75rem;
     min-width: 2.75rem;
     padding: 0;
 
-    &:first-child {
-      margin-left: 0;
-    }
-
     svg {
-      height: 2.75rem;
-      width: 2.75rem;
+      height: 2rem;
+      width: 2rem;
     }
   }
 }

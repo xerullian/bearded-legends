@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
-// import useContentBundle from '@hooks/useContentBundle';
-import * as styles from './App.scss';
-// import content from './App.yaml';
+import useContentBundle from '@hooks/useContentBundle';
+import useSwipe from '@hooks/useSwipe';
 import { pack } from '@utils/Arrays';
+import React, { useEffect } from 'react';
 import useServiceWorker from '../hooks/useServiceWorker';
-import useSwipe from '../hooks/useSwipe';
-import Clock from './GuildWars/Clock/Clock';
-import Timer from './GuildWars/Timer/Timer';
-import * as layout from '@styles/Layout.scss';
+import * as styles from './App.scss';
+import content from './App.yaml';
+import GuildWars from './GuildWars/GuildWars';
 
 export default function App({ className }) {
-  // const b = useContentBundle(content);
+  const b = useContentBundle(content);
+  const [ref, swipe] = useSwipe();
 
   useServiceWorker();
-  const [ref, swipe] = useSwipe();
 
   useEffect(() => {
     if (swipe === 'down') {
@@ -27,23 +25,8 @@ export default function App({ className }) {
   }, [swipe]);
 
   return (
-    <div className={pack(className, styles.App).join(' ')} ref={ref}>
-      <Clock />
-      <FlexWrap>
-        <Timer id="0" />
-        <Timer id="1" />
-        <Timer id="2" />
-        <Timer id="3" />
-        <Timer id="4" />
-        <Timer id="5" />
-        <Timer id="6" />
-        <Timer id="7" />
-        <Timer id="8" />
-      </FlexWrap>
+    <div ref={ref}>
+      <GuildWars className={pack(className, styles.App).join(' ')} />
     </div>
   );
-}
-
-function FlexWrap({ children }) {
-  return <div className={layout.FlexWrap}>{children}</div>;
 }

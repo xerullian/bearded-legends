@@ -3,27 +3,36 @@
 
 .Timer {
   align-items: center;
-  display: flex;
 
-  &.Started {
+  .Started {
     @include NormalColor;
   }
 
-  &.Paused {
+  .Paused {
     @include InactiveColor;
   }
 
-  &.Warning {
+  .Warning {
     @include WarningColor;
   }
 
-  &.Expiring {
+  .Expiring {
     @include ErrorColor;
   }
 
-  &.Expired {
+  .Expired {
     @include ErrorColor;
     @include Blink;
+  }
+
+  & > div > div > div {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+  }
+
+  .Label {
+    content: '';
   }
 
   .Display {
@@ -32,10 +41,5 @@
 
   .Control {
     content: '';
-  }
-
-  .Control + .Display,
-  .Display + .Control {
-    margin-left: 0.5rem;
   }
 }
