@@ -1,15 +1,15 @@
-.Normal {
+@mixin NormalColor {
   color: black;
 }
 
-.Inactive {
+@mixin InactiveColor {
   color: slategray;
 }
 
-.Warning {
+@mixin WarningColor {
   color: darkorange;
 }
 
-.Error {
+@mixin ErrorColor {
   color: red;
 }

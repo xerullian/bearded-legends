@@ -4,10 +4,10 @@
   }
 }
 
-.BlinkFast {
+@mixin BlinkFast {
   animation: blink 1s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
 }
 
-.Blink {
+@mixin Blink {
   animation: blink 2s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
 }

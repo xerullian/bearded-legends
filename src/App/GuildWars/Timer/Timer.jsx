@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { SrOnly } from '@components/SrOnly';
 import useContentBundle from '@hooks/useContentBundle';
+// import * as animation from '@styles/Animation.scss';
+import { pack } from '@utils/Arrays';
+import Logger from '@utils/Logger';
+import React, { useEffect, useState } from 'react';
+import { PauseCircle, PlayCircle, StopCircle } from 'react-bootstrap-icons';
+import Card from '../../../components/Card';
+import useInterval from '../../../hooks/useInterval';
+import { useLocalStorage } from '../../../hooks/useStorage';
+import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
 import * as styles from './Timer.scss';
-import * as animation from '@styles/Animation.scss';
-import { useLocalStorage } from '../../../hooks/useStorage';
-import Logger from '@utils/Logger';
-import useInterval from '../../../hooks/useInterval';
-import Card from '../../../components/Card';
 import content from './Timer.yaml';
-import useSwipe from '../../../hooks/useSwipe';
-import {
-  PauseCircle,
-  PauseFill,
-  PlayCircle,
-  StopCircle,
-} from 'react-bootstrap-icons';
-import { SrOnly } from '@components/SrOnly';
-import { pack } from '@utils/Arrays';
 
 // const DEFAULT_REMAINING_MILLIS = 10_000;
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
@@ -129,34 +124,19 @@ export default function Timer({ id, className }) {
   // FIXME header
   return (
     <Card>
-      <div className={pack(className, styles.Timer).join(' ')} ref={ref}>
-        <div
-          className={pack(
-            styles.Elapsed,
-            startTimestamp && styles.Started,
-            pauseTimestamp && styles.Paused,
-            remainingMillis < 240_000 && styles.Warning,
-            remainingMillis < 120_000 && styles.Expiring,
-            remainingMillis < 0 && animation.Blink,
-          ).join(' ')}
-        >
-          <div className={styles.Minutes}>
-            {minutes}
-            <span>
-              <abbr title={b.Minutes()}>
-                <b.MinutesAbbr />
-              </abbr>
-            </span>
-          </div>
-          <div className={styles.Seconds}>
-            {seconds}
-            <span>
-              <abbr title={b.Seconds()}>
-                <b.SecondsAbbr />
-              </abbr>
-            </span>
-          </div>
-        </div>
+      <div
+        className={pack(
+          className,
+          styles.Timer,
+          pauseTimestamp && styles.Paused,
+          startTimestamp && styles.Started,
+          !startTimestamp && styles.Paused,
+          remainingMillis < 240_000 && styles.Warning,
+          remainingMillis < 120_000 && styles.Expiring,
+          remainingMillis < 0 && styles.Expired,
+        ).join(' ')}
+        ref={ref}
+      >
         <div className={styles.Controls}>
           <button type="button" onClick={onClickSuperButton}>
             {pauseTimestamp ? (
@@ -188,6 +168,24 @@ export default function Timer({ id, className }) {
               <b.ResetButtonLabel />
             </SrOnly>
           </button>
+        </div>
+        <div className={pack(styles.Elapsed).join(' ')}>
+          <div className={styles.Minutes}>
+            {minutes}
+            <span>
+              <abbr title={b.Minutes()}>
+                <b.MinutesAbbr />
+              </abbr>
+            </span>
+          </div>
+          <div className={styles.Seconds}>
+            {seconds}
+            <span>
+              <abbr title={b.Seconds()}>
+                <b.SecondsAbbr />
+              </abbr>
+            </span>
+          </div>
         </div>
       </div>
     </Card>

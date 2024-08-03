@@ -1,8 +1,8 @@
-import { renderToString } from 'react-dom/server';
-import stringToTemplate from '@utils/stringToTemplate';
 import isComponent from '@utils/isComponent';
-import noop from '@utils/noop';
 import Logger from '@utils/Logger';
+import noop from '@utils/noop';
+import stringToTemplate from '@utils/stringToTemplate';
+import { renderToString } from 'react-dom/server';
 
 /**
  * Usage)

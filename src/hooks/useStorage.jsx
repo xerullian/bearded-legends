@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import stringify from 'json-stable-stringify';
+import { useEffect, useState } from 'react';
 
 export function useSessionStorage(key, initialValue = null) {
   return useStorage(sessionStorage, key, initialValue);

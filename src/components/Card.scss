@@ -1,9 +1,43 @@
 .Card {
-  .Header {
-    font-size: 0.75rem;
-    margin: 0.5rem 0;
+  border-bottom: 1px solid red;
+  width: 100vw;
+
+  div {
+    padding: 0.125rem;
   }
 
-  .Body {
+  @media screen and (min-width: 640px) {
+    //320 x 2
+    width: 50vw;
+  }
+
+  @media screen and (min-width: 960px) {
+    //320 x 3
+    width: 33.33vw;
+  }
+
+  @media screen and (min-width: 1280px) {
+    //320 x 4
+    width: 25vw;
+  }
+
+  @media screen and (min-width: 1600px) {
+    //320 x 5
+    width: 20vw;
+  }
+
+  @media screen and (min-width: 1920px) {
+    //320 x 6
+    width: 16.66vw;
+  }
+
+  @media screen and (min-width: 2240px) {
+    //320 x 7
+    width: 14.28vw;
+  }
+
+  @media screen and (min-width: 2560px) {
+    //320 x 8
+    width: 12.5vw;
   }
 }
