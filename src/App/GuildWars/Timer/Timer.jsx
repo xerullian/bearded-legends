@@ -12,6 +12,8 @@ import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
 import * as styles from './Timer.scss';
 import content from './Timer.yaml';
+import TimerDisplay from './TimerDisplay';
+import TimerControl from './TimerControl';
 
 // const DEFAULT_REMAINING_MILLIS = 10_000;
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
@@ -23,7 +25,7 @@ export default function Timer({ id, className }) {
   const b = useContentBundle(appContent, content);
   const [ref, swipe] = useSwipe();
   const [tick, start, stop] = useInterval({ strict: false });
-  const [{ minutes, seconds }, setDisplay] = useState({});
+  const [{ hours, minutes, seconds }, setDisplay] = useState({});
 
   const [remainingMillis, setRemainingMillis] = useState(
     DEFAULT_REMAINING_MILLIS,
@@ -108,15 +110,25 @@ export default function Timer({ id, className }) {
   }, [tick, startTimestamp, pauseTimestamp]);
 
   useEffect(() => {
+    const remainingSeconds = remainingMillis / 1000;
+    const remainingMinutes = remainingSeconds / 60;
+    const remainingHours = remainingMinutes / 60;
+
+    const seconds = remainingSeconds % 60;
+    const minutes = remainingMinutes % 60;
+    const hours = remainingHours;
+
     if (remainingMillis > 0) {
       setDisplay({
-        minutes: Math.floor(remainingMillis / 60_000),
-        seconds: Math.abs(Math.floor((remainingMillis % 60_000) / 1000)),
+        hours: Math.abs(Math.floor(hours)),
+        minutes: Math.abs(Math.floor(minutes)),
+        seconds: Math.abs(Math.floor(seconds)),
       });
     } else {
       setDisplay({
-        minutes: Math.abs(Math.ceil(remainingMillis / 60_000)),
-        seconds: Math.abs(Math.floor((remainingMillis % 60_000) / 1000)),
+        hours: Math.abs(Math.ceil(hours)),
+        minutes: Math.abs(Math.ceil(minutes)),
+        seconds: Math.abs(Math.ceil(seconds)),
       });
     }
   }, [remainingMillis]);
@@ -137,56 +149,25 @@ export default function Timer({ id, className }) {
         ).join(' ')}
         ref={ref}
       >
-        <div className={styles.Controls}>
-          <button type="button" onClick={onClickSuperButton}>
-            {pauseTimestamp ? (
-              <>
-                <PlayCircle />
-                <SrOnly>
-                  <b.ResumeButtonLabel />
-                </SrOnly>
-              </>
-            ) : !startTimestamp ? (
-              <>
-                <PlayCircle />
-                <SrOnly>
-                  <b.StartButtonLabel />
-                </SrOnly>
-              </>
-            ) : (
-              <>
-                <PauseCircle />
-                <SrOnly>
-                  <b.PauseButtonLabel />
-                </SrOnly>
-              </>
-            )}
-          </button>
-          <button type="button" onClick={onClickResetButton}>
-            <StopCircle />
-            <SrOnly>
-              <b.ResetButtonLabel />
-            </SrOnly>
-          </button>
-        </div>
-        <div className={pack(styles.Elapsed).join(' ')}>
-          <div className={styles.Minutes}>
-            {minutes}
-            <span>
-              <abbr title={b.Minutes()}>
-                <b.MinutesAbbr />
-              </abbr>
-            </span>
-          </div>
-          <div className={styles.Seconds}>
-            {seconds}
-            <span>
-              <abbr title={b.Seconds()}>
-                <b.SecondsAbbr />
-              </abbr>
-            </span>
-          </div>
-        </div>
+        <TimerControl
+          id={id}
+          className={styles.Control}
+          startTimestamp={startTimestamp}
+          pauseTimestamp={pauseTimestamp}
+          onClickSuperButton={onClickSuperButton}
+          onClickResetButton={onClickResetButton}
+        />
+
+        <TimerDisplay
+          className={styles.Display}
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+        />
+      </div>
+
+      <div>
+        <input value="Graypen Jetty"></input>
       </div>
     </Card>
   );

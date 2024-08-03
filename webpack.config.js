@@ -24,7 +24,7 @@ module.exports = {
             options: {
               modules: {
                 // localIdentName: 'BL-[local]',
-                localIdentName: '[name]-[local]-[hash:base64:5]',
+                localIdentName: '[hash:base64:5]-[local]',
               },
             },
           },

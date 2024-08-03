@@ -1,0 +1,35 @@
+@import '@styles/Typography.scss';
+
+.TimerDisplay {
+  @include Monospace;
+  align-items: baseline;
+  display: flex;
+
+  & > * {
+    margin-left: 0.25rem;
+
+    &[data-value='0'] {
+      margin-left: 0;
+      overflow: hidden;
+      width: 0;
+    }
+  }
+
+  .Hours {
+    font-size: 3rem;
+  }
+
+  .Minutes {
+    font-size: 3rem;
+  }
+
+  .Seconds {
+    font-size: 2rem;
+  }
+
+  abbr {
+    font-size: 1rem;
+    margin-left: 0.25rem;
+    text-decoration: none;
+  }
+}
