@@ -1,25 +1,42 @@
-import Flex from '@components/Flex';
+import * as Layout from '@styles/Layout.scss';
 import { pack } from '@utils/Arrays';
 import React from 'react';
-import Clock from './Clock/Clock';
-import * as styles from './GuildWars.scss';
+import * as Styles from './GuildWars.scss';
+import Clock from './Header/Clock';
+import Logo from './Header/Logo';
+import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
+import useContentBundle from '@hooks/useContentBundle';
+import content from '../App.yaml';
 
 export default function GuildWars({ className }) {
+  const b = useContentBundle(content);
+
   return (
-    <div className={pack(className, styles.GuildWars).join(' ')}>
-      <Clock />
-      <Flex>
-        <Timer id="0" />
-        <Timer id="1" />
-        <Timer id="2" />
-        <Timer id="3" />
-        <Timer id="4" />
-        <Timer id="5" />
-        <Timer id="6" />
-        <Timer id="7" />
-        <Timer id="8" />
-      </Flex>
+    <div className={pack(className, Styles.GuildWars).join(' ')}>
+      <div className={Layout.FlexCenter}>
+        <div>
+          <div className={Layout.FlexCenter}>
+            <Logo />
+            <Clock className={Styles.Clock} />
+          </div>
+          <div className={Layout.TextCenter}>
+            <b.GuildName /> &mdash; <b.AppName />
+          </div>
+        </div>
+      </div>
+      <div className={Layout.FlexStart}>
+        <Timer id="0" dataListId={'nodeDataList'} />
+        <Timer id="1" dataListId={'nodeDataList'} />
+        <Timer id="2" dataListId={'nodeDataList'} />
+        <Timer id="3" dataListId={'nodeDataList'} />
+        <Timer id="4" dataListId={'nodeDataList'} />
+        <Timer id="5" dataListId={'nodeDataList'} />
+        <Timer id="6" dataListId={'nodeDataList'} />
+        <Timer id="7" dataListId={'nodeDataList'} />
+        <Timer id="8" dataListId={'nodeDataList'} />
+      </div>
+      <NodeDataList />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import useSwipe from '@hooks/useSwipe';
 import { pack } from '@utils/Arrays';
 import React, { useEffect } from 'react';
 import useServiceWorker from '../hooks/useServiceWorker';
-import * as styles from './App.scss';
+import * as Styles from './App.scss';
 import content from './App.yaml';
 import GuildWars from './GuildWars/GuildWars';
 
@@ -26,7 +26,7 @@ export default function App({ className }) {
 
   return (
     <div ref={ref}>
-      <GuildWars className={pack(className, styles.App).join(' ')} />
+      <GuildWars className={pack(className, Styles.App).join(' ')} />
     </div>
   );
 }

@@ -1,5 +1,17 @@
-.Flex {
+.FlexStart {
+  align-items: center;
   justify-content: flex-start;
   display: flex;
   flex-wrap: wrap;
+}
+
+.FlexCenter {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.TextCenter {
+  text-align: center;
 }

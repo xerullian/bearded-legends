@@ -1,8 +1,10 @@
+import React from 'react';
+
 export default function NodeDataList(props) {
   return (
-    <dataList id="nodeNames">
+    <datalist id="nodeDataList">
       <option value="Greypen Jetty" />
       <option value="Westwood Keep" />
-    </dataList>
+    </datalist>
   );
 }

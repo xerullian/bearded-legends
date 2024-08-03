@@ -24,6 +24,29 @@ module.exports = {
     'import/default': 'error',
     'import/namespace': 'error',
     'import/no-unresolved': 'error',
+    // 'import/order': [
+    //   'warn',
+    //   {
+    //     groups: ['builtin', 'external', 'internal'],
+    //     pathGroups: [
+    //       {
+    //         pattern: 'react',
+    //         group: 'external',
+    //         position: 'before',
+    //       },
+    //       {
+    //         pattern: '**/*.scss',
+    //         group: 'index',
+    //       },
+    //     ],
+    //     pathGroupsExcludedImportTypes: ['react'],
+    //     // 'newlines-between': 'always',
+    //     alphabetize: {
+    //       order: 'asc',
+    //       caseInsensitive: true,
+    //     },
+    //   },
+    // ],
     'import/extensions': [
       'error',
       'always',

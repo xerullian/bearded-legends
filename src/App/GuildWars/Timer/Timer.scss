@@ -3,6 +3,7 @@
 
 .Timer {
   align-items: center;
+  margin-top: 1.5rem;
 
   .Started {
     @include NormalColor;

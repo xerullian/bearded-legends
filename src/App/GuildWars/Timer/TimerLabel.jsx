@@ -1,7 +1,7 @@
 import useContentBundle from '@hooks/useContentBundle';
 import React, { useRef } from 'react';
 import content from './Timer.yaml';
-import * as styles from './TimerLabel.scss';
+import * as Styles from './TimerLabel.scss';
 
 export default function TimerLabel({ name, setName, dataListId }) {
   const inputRef = useRef(null);
@@ -18,13 +18,14 @@ export default function TimerLabel({ name, setName, dataListId }) {
   };
 
   return (
-    <div className={styles.TimerLabel}>
+    <div className={Styles.TimerLabel}>
       <input
         ref={inputRef}
-        value={name || b.DefaultTimerName()}
-        autoCorrect={false}
+        value={name}
+        autoCorrect={'false'}
         spellCheck={false}
         list={dataListId}
+        placeholder={b.DefaultTimerName()}
         onChange={onChange}
         onFocus={onFocus}
       ></input>

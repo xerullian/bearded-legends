@@ -1,5 +1,5 @@
 en:
-  Greeting: Hello, ${name}!
+  AppName: War Timer
   GuildName: Bearded Legends
   GameName: Knighthood
   WelcomeMessage: Welcome to ${place}

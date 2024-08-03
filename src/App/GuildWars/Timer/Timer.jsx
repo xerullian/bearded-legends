@@ -1,16 +1,16 @@
-import Flex from '@components/Flex';
 import { SrOnly } from '@components/SrOnly';
 import useContentBundle from '@hooks/useContentBundle';
+import * as Layout from '@styles/Layout.scss';
 import { pack } from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import { PauseFill, PlayFill, XSquare } from 'react-bootstrap-icons';
+import { PauseCircle, PlayCircle, XSquare } from 'react-bootstrap-icons';
 import Card from '../../../components/Card';
 import useInterval from '../../../hooks/useInterval';
 import { useLocalStorage } from '../../../hooks/useStorage';
 import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
-import * as styles from './Timer.scss';
+import * as Styles from './Timer.scss';
 import content from './Timer.yaml';
 import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';
@@ -20,7 +20,7 @@ const DEFAULT_REMAINING_MILLIS = 1_800_000;
 
 // FIXME auto generate ID if one is not provided
 
-export default function Timer({ id, className }) {
+export default function Timer({ id, className, dataListId }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(appContent, content);
   const [ref, swipe] = useSwipe();
@@ -32,7 +32,7 @@ export default function Timer({ id, className }) {
   );
 
   const [timestamp, setTimestamp] = useLocalStorage(`BL.Timer.${id}`, {
-    name: '',
+    name: b.DefaultTimerName(),
     startTimestamp: 0,
     pauseTimestamp: 0,
   });
@@ -150,58 +150,59 @@ export default function Timer({ id, className }) {
     }
   }, [remainingMillis]);
 
-  // FIXME header
   return (
-    <Card className={pack(className, styles.Timer).join(' ')}>
+    <Card className={pack(className, Styles.Timer).join(' ')}>
       <div
         className={pack(
-          pauseTimestamp && styles.Paused,
-          startTimestamp && styles.Started,
-          !startTimestamp && styles.Paused,
-          remainingMillis < 240_000 && styles.Warning,
-          remainingMillis < 120_000 && styles.Expiring,
-          remainingMillis < 0 && styles.Expired,
+          pauseTimestamp && Styles.Paused,
+          startTimestamp && Styles.Started,
+          !startTimestamp && Styles.Paused,
+          remainingMillis < 240_000 && Styles.Warning,
+          remainingMillis < 120_000 && Styles.Expiring,
+          remainingMillis < 0 && Styles.Expired,
         ).join(' ')}
         ref={ref}
       >
         <TimerLabel
-          className={styles.Label}
+          className={Styles.Label}
           name={name}
-          dataListId="nodeNames"
+          dataListId={dataListId}
           setName={setName}
         />
 
-        <Flex>
+        <div className={Layout.FlexStart}>
           <TimerControl onClick={onClickSuperButton}>
             {pauseTimestamp ? (
               <>
-                <PlayFill />
+                <PlayCircle />
                 <SrOnly>
                   <b.ResumeButtonLabel />
                 </SrOnly>
               </>
             ) : !startTimestamp ? (
               <>
-                <PlayFill />
+                <PlayCircle />
                 <SrOnly>
                   <b.StartButtonLabel />
                 </SrOnly>
               </>
             ) : (
               <>
-                <PauseFill />
+                <PauseCircle />
                 <SrOnly>
                   <b.PauseButtonLabel />
                 </SrOnly>
               </>
             )}
           </TimerControl>
+
           <TimerDisplay
-            className={styles.Display}
+            className={Styles.Display}
             hours={hours}
             minutes={minutes}
             seconds={seconds}
           />
+
           {!!pauseTimestamp && (
             <TimerControl onClick={onClickResetButton}>
               <XSquare />
@@ -210,7 +211,7 @@ export default function Timer({ id, className }) {
               </SrOnly>
             </TimerControl>
           )}
-        </Flex>
+        </div>
       </div>
     </Card>
   );
