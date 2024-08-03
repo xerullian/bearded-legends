@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const DEFAULT_MIN_SWIPE_DISTANCE = 30;
+const DEFAULT_MIN_SWIPE_DISTANCE = 70;
 
 export default function useSwipe(
   minSwipeDistance = DEFAULT_MIN_SWIPE_DISTANCE,
@@ -18,6 +18,10 @@ export default function useSwipe(
   function onTouchEnd(domEvent) {
     const { pageX, pageY } = domEvent.changedTouches[0];
     setEnd({ pageX, pageY });
+  }
+
+  function reset(value = null) {
+    setSwipe(value);
   }
 
   useEffect(() => {
@@ -57,5 +61,5 @@ export default function useSwipe(
     };
   }, []);
 
-  return [ref, swipe];
+  return [ref, swipe, reset];
 }

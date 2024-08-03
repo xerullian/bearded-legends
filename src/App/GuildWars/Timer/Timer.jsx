@@ -4,7 +4,13 @@ import * as Layout from '@styles/Layout.scss';
 import { pack } from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import { PauseCircle, PlayCircle, XSquare } from 'react-bootstrap-icons';
+import {
+  ArrowClockwise,
+  PauseCircle,
+  PlayCircle,
+  X,
+  XSquare,
+} from 'react-bootstrap-icons';
 import Card from '../../../components/Card';
 import useInterval from '../../../hooks/useInterval';
 import { useLocalStorage } from '../../../hooks/useStorage';
@@ -23,7 +29,7 @@ const DEFAULT_REMAINING_MILLIS = 1_800_000;
 export default function Timer({ id, className, dataListId }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(appContent, content);
-  const [ref, swipe] = useSwipe();
+  const [swipeRef, swipe, resetSwipe] = useSwipe();
   const [tick, start, stop] = useInterval({ strict: false });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
 
@@ -153,6 +159,7 @@ export default function Timer({ id, className, dataListId }) {
   return (
     <Card className={pack(className, Styles.Timer).join(' ')}>
       <div
+        ref={swipeRef}
         className={pack(
           pauseTimestamp && Styles.Paused,
           startTimestamp && Styles.Started,
@@ -161,7 +168,6 @@ export default function Timer({ id, className, dataListId }) {
           remainingMillis < 120_000 && Styles.Expiring,
           remainingMillis < 0 && Styles.Expired,
         ).join(' ')}
-        ref={ref}
       >
         <TimerLabel
           className={Styles.Label}
@@ -170,47 +176,75 @@ export default function Timer({ id, className, dataListId }) {
           setName={setName}
         />
 
-        <div className={Layout.FlexStart}>
-          <TimerControl onClick={onClickSuperButton}>
-            {pauseTimestamp ? (
-              <>
-                <PlayCircle />
-                <SrOnly>
-                  <b.ResumeButtonLabel />
-                </SrOnly>
-              </>
-            ) : !startTimestamp ? (
-              <>
-                <PlayCircle />
-                <SrOnly>
-                  <b.StartButtonLabel />
-                </SrOnly>
-              </>
-            ) : (
-              <>
-                <PauseCircle />
-                <SrOnly>
-                  <b.PauseButtonLabel />
-                </SrOnly>
-              </>
-            )}
-          </TimerControl>
-
-          <TimerDisplay
-            className={Styles.Display}
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-          />
-
-          {!!pauseTimestamp && (
-            <TimerControl onClick={onClickResetButton}>
-              <XSquare />
-              <SrOnly>
-                <b.ResetButtonLabel />
-              </SrOnly>
+        <div className={Layout.FlexSpaceBetween}>
+          <div
+            className={pack(
+              Layout.FlexStart,
+              Layout.NoWrap,
+              swipe === 'left' && Layout.OverflowHidden,
+            ).join(' ')}
+          >
+            <TimerControl onClick={onClickSuperButton}>
+              {pauseTimestamp ? (
+                <>
+                  <PlayCircle />
+                  <SrOnly>
+                    <b.ResumeButtonLabel />
+                  </SrOnly>
+                </>
+              ) : !startTimestamp ? (
+                <>
+                  <PlayCircle />
+                  <SrOnly>
+                    <b.StartButtonLabel />
+                  </SrOnly>
+                </>
+              ) : (
+                <>
+                  <PauseCircle />
+                  <SrOnly>
+                    <b.PauseButtonLabel />
+                  </SrOnly>
+                </>
+              )}
             </TimerControl>
-          )}
+
+            <TimerDisplay
+              className={Styles.Display}
+              hours={hours}
+              minutes={minutes}
+              seconds={seconds}
+            />
+
+            {!!pauseTimestamp && (
+              <TimerControl onClick={onClickResetButton}>
+                <ArrowClockwise />
+                <SrOnly>
+                  <b.ResetButtonLabel />
+                </SrOnly>
+              </TimerControl>
+            )}
+          </div>
+
+          {/* <div className={Styles.SlideIn} data-open={swipe === 'left'}> */}
+          <div
+            className={pack(
+              Styles.SlideIn,
+              swipe === 'left' && Styles.Open,
+            ).join(' ')}
+          >
+            <button
+              type="button"
+              onClick={(domEvent) => {
+                onClickResetButton(domEvent);
+                resetSwipe();
+              }}
+            >
+              <div className={Layout.FlexStart}>
+                <b.RemoveButtonLabel />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </Card>

@@ -16,7 +16,7 @@ export default function GuildWars({ className }) {
     <div className={pack(className, Styles.GuildWars).join(' ')}>
       <div className={Layout.FlexCenter}>
         <div>
-          <div className={Layout.FlexCenter}>
+          <div className={pack(Layout.FlexCenter, Layout.NoWrap).join(' ')}>
             <Logo />
             <Clock className={Styles.Clock} />
           </div>
@@ -25,7 +25,7 @@ export default function GuildWars({ className }) {
           </div>
         </div>
       </div>
-      <div className={Layout.FlexStart}>
+      <div className={pack(Layout.FlexStart, Layout.Wrap).join(' ')}>
         <Timer id="0" dataListId={'nodeDataList'} />
         <Timer id="1" dataListId={'nodeDataList'} />
         <Timer id="2" dataListId={'nodeDataList'} />

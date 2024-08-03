@@ -1,17 +1,33 @@
+.FlexSpaceBetween {
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
 .FlexStart {
   align-items: center;
   justify-content: flex-start;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .FlexCenter {
   align-items: center;
   justify-content: center;
   display: flex;
+}
+
+.Wrap {
   flex-wrap: wrap;
+}
+
+.NoWrap {
+  flex-wrap: nowrap;
 }
 
 .TextCenter {
   text-align: center;
+}
+
+.OverflowHidden {
+  overflow: hidden;
 }

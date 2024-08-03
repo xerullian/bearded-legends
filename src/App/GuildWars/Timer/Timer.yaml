@@ -3,6 +3,7 @@ en:
   ResumeButtonLabel: Resume
   PauseButtonLabel: Pause
   ResetButtonLabel: Reset
+  RemoveButtonLabel: Remove
   Hours: hours
   HoursAbbr: H
   MinutesAbbr: M
