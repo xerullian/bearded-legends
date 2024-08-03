@@ -21,7 +21,7 @@ export default function GuildWars({ className }) {
             <Clock className={Styles.Clock} />
           </div>
           <div className={Layout.TextCenter}>
-            <b.GuildName /> &mdash; <b.AppName />
+            &mdash; <b.GuildName /> &mdash;
           </div>
         </div>
       </div>

@@ -1,11 +1,9 @@
 .Logo {
   aspect-ratio: 1;
-  height: 3rem;
-  width: 3rem;
-
-  img {
-    display: block;
-    height: auto;
-    width: 100%;
-  }
+  background-image: url('banner-inverted.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 2.75rem 2.75rem;
+  height: 2.75rem;
+  width: 2.75rem;
 }

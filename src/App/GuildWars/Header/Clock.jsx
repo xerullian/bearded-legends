@@ -4,36 +4,36 @@ import { pack } from '@utils/Arrays';
 import React, { useEffect, useState } from 'react';
 import * as Styles from './Clock.scss';
 import content from './Clock.yaml';
-import useFormatDateTime from './useLocaleDateTime';
+import stringToTemplate from '../../../utils/stringToTemplate';
 
 export default function Clock({ className, timeZone = 'UTC' }) {
   const [tick, start] = useInterval({ strict: true });
-  const [now, setNow] = useState(Date.now());
   const b = useContentBundle(content);
-
-  const [formatDate] = useFormatDateTime({
-    timeZone,
-    month: 'short',
-    weekday: 'short',
-    day: '2-digit',
-  });
-
-  const [formatTime] = useFormatDateTime({
-    timeZone,
-    hour: '2-digit',
-    minute: '2-digit',
-    // second: '2-digit',
-    hour12: false,
-  });
+  const [clock, setClock] = useState('');
+  const [progress, setProgress] = useState(0);
+  const CLOCK_FORMAT = b.CLOCK_FORMAT();
 
   useEffect(() => start(), []);
-  useEffect(() => setNow(Date.now()), [tick]);
+
+  useEffect(() => {
+    const now = new Date();
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
+
+    setProgress(hour * 60 + minute);
+
+    setClock(
+      stringToTemplate(CLOCK_FORMAT, {
+        hour: String(hour).padStart(2, '0'),
+        minute: String(minute).padStart(2, '0'),
+      }),
+    );
+  }, [tick]);
 
   return (
     <div className={pack(className, Styles.Clock).join(' ')}>
-      {/* <div className={Styles.Date}>{formatDate(now)}</div> */}
       <div className={Styles.Time}>
-        <div className={Styles.HoursMinutes}>{formatTime(now)}</div>
+        <div className={Styles.HoursMinutes}>{clock}</div>
         <div className={Styles.TimeZone}>{timeZone}</div>
       </div>
     </div>
