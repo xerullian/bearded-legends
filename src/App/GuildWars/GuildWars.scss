@@ -1,5 +1,8 @@
+@import '@styles/Layout.scss';
+
 .GuildWars {
-  content: '';
+  height: auto;
+  padding: 0 0 6rem 0;
 
   .Logo {
     content: '';
@@ -7,5 +10,14 @@
 
   .Clock {
     margin: 0 0.5rem;
+  }
+
+  .Add {
+    button {
+      @include Button;
+      background-color: var(--color-orange);
+      color: var(--color-black);
+      margin: 3.5rem 0 0 0;
+    }
   }
 }

@@ -151,7 +151,7 @@ export default function Timer({ id, className, dataListId }) {
   }, [remainingMillis]);
 
   return (
-    <Card className={pack(className, Styles.Timer).join(' ')}>
+    <div className={pack(className, Styles.Timer).join(' ')}>
       <div
         ref={swipeRef}
         className={pack(
@@ -241,6 +241,6 @@ export default function Timer({ id, className, dataListId }) {
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

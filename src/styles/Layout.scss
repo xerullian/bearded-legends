@@ -1,3 +1,19 @@
+// FIXME Need to organize the code better
+
+:root {
+  --button-border-radius: 0.5rem;
+}
+
+@mixin Button {
+  border: 0;
+  border-radius: var(--button-border-radius);
+  color: var(--color-white);
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap;
+}
+
 .FlexSpaceBetween {
   align-items: center;
   justify-content: space-between;

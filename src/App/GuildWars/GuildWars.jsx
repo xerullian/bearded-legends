@@ -8,6 +8,7 @@ import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
 import useContentBundle from '@hooks/useContentBundle';
 import content from '../App.yaml';
+import Card from '../../components/Card';
 
 export default function GuildWars({ className }) {
   const b = useContentBundle(content);
@@ -26,15 +27,38 @@ export default function GuildWars({ className }) {
         </div>
       </div>
       <div className={pack(Layout.FlexStart, Layout.Wrap).join(' ')}>
-        <Timer id="0" dataListId={'nodeDataList'} />
-        <Timer id="1" dataListId={'nodeDataList'} />
-        <Timer id="2" dataListId={'nodeDataList'} />
-        <Timer id="3" dataListId={'nodeDataList'} />
-        <Timer id="4" dataListId={'nodeDataList'} />
-        <Timer id="5" dataListId={'nodeDataList'} />
-        <Timer id="6" dataListId={'nodeDataList'} />
-        <Timer id="7" dataListId={'nodeDataList'} />
-        <Timer id="8" dataListId={'nodeDataList'} />
+        <Card>
+          <Timer id="0" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="1" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="2" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="3" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="4" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="5" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="6" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="7" dataListId={'nodeDataList'} />
+        </Card>
+        <Card>
+          <Timer id="8" dataListId={'nodeDataList'} />
+        </Card>
+        <Card className={Styles.Add}>
+          <button type="button">
+            <b.AddButtonLabel />
+          </button>
+        </Card>
       </div>
       <NodeDataList />
     </div>

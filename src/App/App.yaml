@@ -4,5 +4,6 @@ en:
   GuildNameDecorative: ⎯ Bearded ✦ Legends ⎯
   GameName: Knighthood
   WelcomeMessage: Welcome to ${place}
+  AddButtonLabel: Add
 es:
   Greeting: ¡Hola, ${name}!
