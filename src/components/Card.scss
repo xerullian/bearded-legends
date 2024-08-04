@@ -1,4 +1,6 @@
 .Card {
+  --border-width: 0.0625rem;
+
   width: 100vw;
 
   @media screen and (min-width: 640px) {
@@ -34,6 +36,15 @@
   @media screen and (min-width: 2560px) {
     //320 x 8
     width: 12.5vw;
+  }
+
+  .Content {
+    // border: var(--border-width) solid transparent;
+
+    &.Flip {
+      background-color: var(--color-gray-darkest);
+      // border: var(--border-width) solid var(--color-cyan);
+    }
   }
 
   .Front {

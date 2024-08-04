@@ -17,32 +17,37 @@ export default function Card({ className, children }) {
 
   return (
     <div
-      className={Arrays.pack(
-        className,
-        Styles.Card,
-        Layout.FlexRow,
-        Layout.JustifySpaceBetween,
-        Layout.AlignStart,
-        swipe === 'left' && Styles.Open,
-      ).join(' ')}
+      className={Arrays.pack(className, Styles.Card).join(' ')}
       ref={swipeRef}
     >
       <div
         className={Arrays.pack(
-          Styles.Front,
-          swipe === 'left' && Styles.Collapse,
+          Styles.Content,
+          Layout.FlexRow,
+          Layout.JustifySpaceBetween,
+          Layout.AlignStart,
+          swipe === 'left' && Styles.Flip,
         ).join(' ')}
       >
-        {frontChildren}
-      </div>
+        <div
+          className={Arrays.pack(
+            Styles.Front,
+            swipe === 'left' && Styles.Collapse,
+          ).join(' ')}
+        >
+          {frontChildren}
+        </div>
 
-      <div
-        className={Arrays.pack(
-          Styles.SlideIn,
-          swipe === 'left' && Styles.Open,
-        ).join(' ')}
-      >
-        {slideInChildren}
+        <div
+          className={Arrays.pack(
+            Styles.SlideIn,
+            Layout.FlexRow,
+            Layout.JustifyEnd,
+            swipe === 'left' && Styles.Open,
+          ).join(' ')}
+        >
+          {slideInChildren}
+        </div>
       </div>
     </div>
   );
