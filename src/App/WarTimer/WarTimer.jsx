@@ -84,9 +84,18 @@ export default function WarTimer({ className }) {
 
         <li>
           <Card className={Styles.Card}>
-            <Button className={Styles.AddButton} onClick={onClickAddButton}>
-              <b.AddButtonLabel />
-            </Button>
+            <div
+              className={Arrays.pack(
+                Layout.FullWidth,
+                Layout.FlexRow,
+                Layout.JustifyCenter,
+                Layout.AlignStart,
+              ).join(' ')}
+            >
+              <Button className={Styles.AddButton} onClick={onClickAddButton}>
+                <b.AddButtonLabel />
+              </Button>
+            </div>
           </Card>
         </li>
       </ul>

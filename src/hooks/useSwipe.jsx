@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-const DEFAULT_MIN_SWIPE_DISTANCE = 70;
+const DEFAULT_MIN_SWIPE_DISTANCE = 60;
+const DEFAULT_RELATIVE_SWIPE_DIRECTION = 3;
 
 export default function useSwipe(
   minSwipeDistance = DEFAULT_MIN_SWIPE_DISTANCE,
@@ -30,13 +31,19 @@ export default function useSwipe(
     const absX = Math.abs(x);
     const absY = Math.abs(y);
 
-    if (absX > absY && absX > minSwipeDistance) {
+    if (
+      absX / absY > DEFAULT_RELATIVE_SWIPE_DIRECTION &&
+      absX > minSwipeDistance
+    ) {
       if (x < 0) {
         setSwipe('left');
       } else {
         setSwipe('right');
       }
-    } else if (absX < absY && absY > minSwipeDistance) {
+    } else if (
+      absY / absX > DEFAULT_RELATIVE_SWIPE_DIRECTION &&
+      absY > minSwipeDistance
+    ) {
       if (y < 0) {
         setSwipe('up');
       } else {
