@@ -1,15 +1,19 @@
-@keyframes blink {
+@keyframes Blink {
   100% {
     opacity: 0;
   }
 }
 
 @mixin BlinkFast {
-  animation: blink 0.5s infinite;
+  animation: Blink 0.9s ease-in infinite;
 }
 
 @mixin Blink {
-  animation: blink 1s infinite;
+  animation: Blink 1.2s ease-in infinite;
+}
+
+@mixin BlinkSlow {
+  animation: Blink 1.5s ease-in infinite;
 }
 
 .BlinkFast {

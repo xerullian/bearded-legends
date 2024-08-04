@@ -1,31 +1,15 @@
 :root {
-  --color-red: red;
-  --color-orange: orange;
-  --color-gray: gray;
-  --color-white: white;
   --color-black: black;
+  --color-gray: gray;
+  --color-orange: orange;
+  --color-red: red;
+  --color-white: white;
 
   @media (prefers-color-scheme: light) {
-    --color-red: crimson;
-    --color-orange: #ff6900;
-    --color-gray: slategray;
-    --color-white: black;
     --color-black: white;
+    --color-gray: slategray;
+    --color-orange: #ff6900;
+    --color-red: crimson;
+    --color-white: black;
   }
-}
-
-@mixin NormalColor {
-  color: var(--color-white);
-}
-
-@mixin InactiveColor {
-  color: var(--color-gray);
-}
-
-@mixin WarningColor {
-  color: var(--color-orange);
-}
-
-@mixin ErrorColor {
-  color: var(--color-red);
 }

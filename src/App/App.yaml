@@ -1,6 +1,7 @@
 en:
   AppName: War Timer
   GuildName: Bearded Legends
+  GuildNameDecorative: ⎯ Bearded ✦ Legends ⎯
   GameName: Knighthood
   WelcomeMessage: Welcome to ${place}
 es:
