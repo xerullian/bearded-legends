@@ -15,6 +15,8 @@ import TimerDisplay from './TimerDisplay';
 import TimerLabel from './TimerLabel';
 
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
+const WARNING_REMAINING_MILLIS = 240_000;
+const EXPIRING_REMAINING_MILLIS = 120_000;
 
 // FIXME auto generate ID if one is not provided
 
@@ -150,8 +152,8 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
           pauseTimestamp && Styles.Paused,
           startTimestamp && Styles.Started,
           !startTimestamp && Styles.Paused,
-          remainingMillis < 240_000 && Styles.Warning,
-          remainingMillis < 120_000 && Styles.Expiring,
+          remainingMillis < WARNING_REMAINING_MILLIS && Styles.Warning,
+          remainingMillis < EXPIRING_REMAINING_MILLIS && Styles.Expiring,
           remainingMillis < 0 && Styles.Expired,
         ).join(' ')}
       >
