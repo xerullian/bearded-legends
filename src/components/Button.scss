@@ -18,8 +18,7 @@
 }
 
 @mixin Hover {
-  content: '';
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 
 .Button {

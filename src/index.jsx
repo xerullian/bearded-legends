@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     errorElement: <RouterError />,
   },
   {
-    path: 'gw-timer',
+    path: 'war-timer',
     element: <WarTimer />,
   },
 ]);
@@ -33,5 +33,5 @@ root.render(
 function RouterError() {
   const routerError = useRouteError();
 
-  return <h1>Not found</h1>;
+  return <h1>Error</h1>;
 }

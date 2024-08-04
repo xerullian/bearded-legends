@@ -25,3 +25,13 @@ body {
   font-style: normal;
   src: url('./styles/fonts/troika-webfont.woff');
 }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  text-align: inherit;
+}
