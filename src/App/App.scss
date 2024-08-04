@@ -1,6 +1,7 @@
-@import '@styles/Accessibility.scss';
-@import '@styles/Animation.scss';
+@import '@styles/Color.scss';
 
 .App {
-  content: '';
+  background-color: var(--color-black);
+  color: var(--color-white);
+  height: 100vh;
 }

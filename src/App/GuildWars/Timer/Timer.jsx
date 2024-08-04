@@ -4,13 +4,7 @@ import * as Layout from '@styles/Layout.scss';
 import { pack } from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import {
-  ArrowClockwise,
-  PauseCircle,
-  PlayCircle,
-  X,
-  XSquare,
-} from 'react-bootstrap-icons';
+import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
 import Card from '../../../components/Card';
 import useInterval from '../../../hooks/useInterval';
 import { useLocalStorage } from '../../../hooks/useStorage';

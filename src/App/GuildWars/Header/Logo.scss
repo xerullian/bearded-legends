@@ -1,9 +1,13 @@
 .Logo {
   aspect-ratio: 1;
-  background-image: url('banner-inverted.png');
+  background-image: url('banner.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-size: 2.75rem 2.75rem;
   height: 2.75rem;
   width: 2.75rem;
+
+  @media (prefers-color-scheme: light) {
+    background-image: url('banner-inverted.png');
+  }
 }

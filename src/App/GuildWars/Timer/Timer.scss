@@ -23,13 +23,15 @@
 
   .Expired {
     @include ErrorColor;
-    @include Blink;
+
+    .Display {
+      @include Blink;
+    }
   }
 
   & > div > div > div {
     display: flex;
     align-items: center;
-    // justify-content: space-between;
   }
 
   .Label {
@@ -56,8 +58,9 @@
 
     button {
       background-color: transparent;
-      border: 0.125rem solid red;
+      border: 0.125rem solid var(--color-red);
       border-radius: 0.5rem;
+      color: var(--color-red);
       font-size: 1.25rem;
       padding: 0.5rem;
 

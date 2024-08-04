@@ -7,6 +7,9 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
     <title>Bearded Legends</title>
 
     <!-- favicon and webmanifest -->
@@ -35,13 +38,16 @@
     />
 
     <style>
-      html {
-        font-size: 16px; /* 1rem = 16px by default */
-      }
-
+      html,
       body {
+        background-color: black;
+        font-size: 16px; /* 1rem = 16px by default */
         margin: 0;
         padding: 0;
+
+        @media (prefers-color-scheme: light) {
+          background-color: white;
+        }
       }
 
       @media (max-width: 360px) {
