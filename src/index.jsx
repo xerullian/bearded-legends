@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import './index.css';
 import App from './App/App';
-import GuildWars from './App/GuildWars/GuildWars';
+import WarTimer from './App/WarTimer/WarTimer';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'gw-timer',
-    element: <GuildWars />,
+    element: <WarTimer />,
   },
 ]);
 

@@ -16,6 +16,19 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(otf|ttf|woff\woff2)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+              publicPath: './src/typography/fonts/',
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },

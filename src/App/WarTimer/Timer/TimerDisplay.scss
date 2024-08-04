@@ -1,7 +1,8 @@
 @import '@styles/Typography.scss';
 
 .TimerDisplay {
-  @include Monospace;
+  // @include Monospace;
+  @include Troika;
   align-items: baseline;
   display: flex;
 

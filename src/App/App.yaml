@@ -3,7 +3,8 @@ en:
   GuildNameDecorative: ⎯ Bearded ✦ Legends ⎯
   GameName: Knighthood
   WelcomeMessage: Welcome to ${place}
-  AddButtonLabel: Add
   WarTimerAppName: War Timer
+  ChatAppName: Discord
+  AddButtonLabel: Add
 es:
   Greeting: ¡Hola, ${name}!

@@ -8,4 +8,22 @@
   .Logo {
     display: block;
   }
+
+  a,
+  button {
+    margin-left: 1rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    // TODO Highlight external links
+    &[href^='http'] {
+      // border: 1px solid red;
+
+      &::after {
+        content: '';
+      }
+    }
+  }
 }

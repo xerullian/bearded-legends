@@ -18,3 +18,10 @@ body {
     font-size: 14px; /* 1rem = 14px */
   }
 }
+
+@font-face {
+  font-family: 'troika';
+  font-weight: normal;
+  font-style: normal;
+  src: url('./styles/fonts/troika-webfont.woff');
+}

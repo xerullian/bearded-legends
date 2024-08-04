@@ -1,16 +1,15 @@
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import React from 'react';
-import * as Styles from './GuildWars.scss';
+import * as Styles from './WarTimer.scss';
 import Clock from './Header/Clock';
-import Logo from './Header/Logo';
 import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
 import useContentBundle from '@hooks/useContentBundle';
 import content from '../App.yaml';
 import Card from '../../components/Card';
 
-export default function GuildWars({ className }) {
+export default function WarTimer({ className }) {
   const b = useContentBundle(content);
 
   return (
@@ -31,7 +30,6 @@ export default function GuildWars({ className }) {
               Layout.NoWrap,
             ).join(' ')}
           >
-            <Logo />
             <Clock className={Styles.Clock} />
           </div>
           <div className={Layout.TextCenter}>

@@ -1,13 +1,14 @@
+@import '@styles/Typography.scss';
+
 .Clock {
   .Date {
-    /* font-family: troikaregular; */
     margin: 0.5rem 0 0 0;
   }
 
   .Time {
+    @include Troika;
     align-items: baseline;
     display: flex;
-    /* font-family: troikaregular; */
 
     .HoursMinutes {
       font-size: 4rem;
