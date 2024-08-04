@@ -35,4 +35,27 @@
     //320 x 8
     width: 12.5vw;
   }
+
+  .Front {
+    width: 100%;
+  }
+
+  .Front.Collapse {
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    width: auto;
+  }
+
+  .SlideIn {
+    overflow: hidden;
+    transition: width 0.3s ease-in;
+    width: 0;
+  }
+
+  .SlideIn.Open {
+    flex: 0 0 auto;
+    transition: width 0.3s ease-in;
+    // width: 6.5rem;
+    width: 36.79%;
+  }
 }

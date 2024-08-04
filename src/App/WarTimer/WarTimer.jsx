@@ -15,7 +15,7 @@ export default function WarTimer({ className }) {
   const b = useContentBundle(content);
   const [timers, setTimers] = useLocalStorage('BL.WarTimer.Data', []);
 
-  const onClickAddButton = (domEvent) => {
+  const onClickAddButton = (_domEvent) => {
     const _timers = timers.map((timer) => ({ ...timer }));
     _timers.push({ name: '', startTimestamp: 0, pauseTimestamp: 0 });
     setTimers(_timers);
@@ -51,13 +51,13 @@ export default function WarTimer({ className }) {
         className={Arrays.pack(
           Layout.Flex,
           Layout.JustifyStart,
-          Layout.AlignCenter,
+          Layout.AlignStart,
           Layout.Wrap,
         ).join(' ')}
       >
         {timers.map((timer, index) => (
           <li key={index}>
-            <Card>
+            <Card className={Styles.Card}>
               <Timer
                 timer={timer}
                 setTimer={(value) =>
@@ -65,13 +65,26 @@ export default function WarTimer({ className }) {
                 }
                 nodeDataListId="nodeDataList"
               />
+              <Card.SlideIn>
+                <Button
+                  className={Styles.RemoveButton}
+                  onClick={(_domEvent) =>
+                    setTimers([
+                      ...timers.slice(0, index),
+                      ...timers.slice(index + 1),
+                    ])
+                  }
+                >
+                  <b.RemoveButtonLabel />
+                </Button>
+              </Card.SlideIn>
             </Card>
           </li>
         ))}
 
         <li>
-          <Card className={Styles.Add}>
-            <Button onClick={onClickAddButton}>
+          <Card className={Styles.Card}>
+            <Button className={Styles.AddButton} onClick={onClickAddButton}>
               <b.AddButtonLabel />
             </Button>
           </Card>

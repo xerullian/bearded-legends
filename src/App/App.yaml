@@ -6,5 +6,6 @@ en:
   WarTimerAppName: War Timer
   ChatAppName: Discord
   AddButtonLabel: Add
+  RemoveButtonLabel: Remove
 es:
   Greeting: ¡Hola, ${name}!

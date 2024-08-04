@@ -12,12 +12,19 @@
     margin: 0 0.5rem;
   }
 
-  .Add {
-    button {
-      @include Button;
-      background-color: var(--color-orange);
-      color: var(--color-black);
-      margin: 3.5rem 0 0 0;
-    }
+  .Card {
+    margin: 1.5rem 0 0 0;
+  }
+
+  .AddButton {
+    background-color: var(--color-orange);
+    color: var(--color-black);
+    margin-top: 2.6875rem;
+  }
+
+  .RemoveButton {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    margin-top: 2.6875rem;
   }
 }

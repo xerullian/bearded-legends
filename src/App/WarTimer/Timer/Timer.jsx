@@ -6,7 +6,6 @@ import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
 import useInterval from '../../../hooks/useInterval';
-import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
 import * as Styles from './Timer.scss';
 import content from './Timer.yaml';
@@ -23,7 +22,6 @@ const EXPIRING_REMAINING_MILLIS = 120_000;
 export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(appContent, content);
-  const [swipeRef, swipe, resetSwipe] = useSwipe();
   const [tick, start, stop] = useInterval({ strict: false });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
 
@@ -147,7 +145,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   return (
     <div className={Arrays.pack(className, Styles.Timer).join(' ')}>
       <div
-        ref={swipeRef}
         className={Arrays.pack(
           pauseTimestamp && Styles.Paused,
           startTimestamp && Styles.Started,
@@ -177,7 +174,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
               Layout.JustifyStart,
               Layout.AlignCenter,
               Layout.NoWrap,
-              swipe === 'left' && Layout.OverflowHidden,
             ).join(' ')}
           >
             <TimerControl onClick={onClickSuperButton}>
@@ -222,8 +218,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
             )}
           </div>
 
-          {/* <div className={Styles.SlideIn} data-open={swipe === 'left'}> */}
-          <div
+          {/* <div
             className={Arrays.pack(
               Styles.SlideIn,
               swipe === 'left' && Styles.Open,
@@ -246,7 +241,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
                 <b.RemoveButtonLabel />
               </div>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
