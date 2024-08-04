@@ -18,13 +18,7 @@ const DEFAULT_REMAINING_MILLIS = 1_800_000;
 
 // FIXME auto generate ID if one is not provided
 
-export default function Timer({
-  id,
-  className,
-  dataListId,
-  timestamp,
-  setTimestamp,
-}) {
+export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(appContent, content);
   const [swipeRef, swipe, resetSwipe] = useSwipe();
@@ -35,11 +29,11 @@ export default function Timer({
     DEFAULT_REMAINING_MILLIS,
   );
 
-  const { name, startTimestamp, pauseTimestamp } = timestamp;
+  const { name, startTimestamp, pauseTimestamp } = timer;
 
   const setName = (name) => {
-    setTimestamp({
-      ...timestamp,
+    setTimer({
+      ...timer,
       name,
     });
   };
@@ -48,8 +42,8 @@ export default function Timer({
     onClickResetButton();
     start();
 
-    setTimestamp({
-      ...timestamp,
+    setTimer({
+      ...timer,
       startTimestamp: Date.now(),
     });
   };
@@ -57,7 +51,7 @@ export default function Timer({
   const onClickPauseButton = (_domEvent) => {
     if (!pauseTimestamp) {
       stop();
-      setTimestamp({ ...timestamp, pauseTimestamp: Date.now() });
+      setTimer({ ...timer, pauseTimestamp: Date.now() });
     }
   };
 
@@ -65,16 +59,16 @@ export default function Timer({
     if (pauseTimestamp) {
       const _startTimestamp = startTimestamp + Date.now() - pauseTimestamp;
 
-      setTimestamp({
-        ...timestamp,
+      setTimer({
+        ...timer,
         startTimestamp: _startTimestamp,
         pauseTimestamp: 0,
       });
 
       start();
 
-      setTimestamp({
-        ...timestamp,
+      setTimer({
+        ...timer,
         startTimestamp: _startTimestamp,
         pauseTimestamp: 0,
       });
@@ -83,7 +77,7 @@ export default function Timer({
 
   const onClickResetButton = (_domEvent) => {
     stop();
-    setTimestamp({ ...timestamp, startTimestamp: 0, pauseTimestamp: 0 });
+    setTimer({ ...timer, startTimestamp: 0, pauseTimestamp: 0 });
     setRemainingMillis(DEFAULT_REMAINING_MILLIS);
   };
 
@@ -104,8 +98,8 @@ export default function Timer({
       const now = Date.now();
       const elapsed = now - pauseTimestamp;
 
-      setTimestamp({
-        ...timestamp,
+      setTimer({
+        ...timer,
         startTimestamp: startTimestamp + elapsed,
         pauseTimestamp: now,
       });
@@ -164,7 +158,7 @@ export default function Timer({
         <TimerLabel
           className={Styles.Label}
           name={name}
-          dataListId={dataListId}
+          dataListId={nodeDataListId}
           setName={setName}
         />
 

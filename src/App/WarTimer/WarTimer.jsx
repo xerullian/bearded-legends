@@ -59,11 +59,11 @@ export default function WarTimer({ className }) {
           <li key={index}>
             <Card>
               <Timer
-                timestamp={timer}
-                setTimestamp={(value) =>
+                timer={timer}
+                setTimer={(value) =>
                   setTimers(timers.map((e, i) => (i === index ? value : e)))
                 }
-                dataListId="nodeDataList"
+                nodeDataListId="nodeDataList"
               />
             </Card>
           </li>
