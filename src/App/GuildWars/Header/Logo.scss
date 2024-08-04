@@ -9,9 +9,9 @@
   height: 2.75rem;
   width: 2.75rem;
 
-  @media (prefers-color-scheme: light) {
-    background-image: url('banner-inverted.png');
-  }
+  // @media (prefers-color-scheme: light) {
+  //   background-image: url('banner-inverted.png');
+  // }
 
   &.Largest {
     background-size: 7.8125rem 7.8125rem;

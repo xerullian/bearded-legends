@@ -2,6 +2,16 @@
   display: flex;
 }
 
+.FlexRow {
+  composes: Flex;
+  flex-direction: row;
+}
+
+.FlexColumn {
+  composes: Flex;
+  flex-direction: column;
+}
+
 // justify-content
 
 .JustifyCenter {
@@ -12,11 +22,19 @@
   justify-content: space-between;
 }
 
+.JustifySpaceEvenly {
+  justify-content: space-evenly;
+}
+
 .JustifyStart {
   justify-content: flex-start;
 }
 
 // align-items
+
+.AlignBaseline {
+  align-items: baseline;
+}
 
 .AlignCenter {
   align-items: center;
@@ -33,20 +51,6 @@
 }
 
 // FIXME Need to organize the code below
-
-:root {
-  --button-border-radius: 0.5rem;
-}
-
-@mixin Button {
-  border: 0;
-  border-radius: var(--button-border-radius);
-  color: var(--color-white);
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding: 0.5rem 0.75rem;
-  white-space: nowrap;
-}
 
 .TextCenter {
   text-align: center;

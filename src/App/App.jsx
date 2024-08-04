@@ -3,6 +3,8 @@ import useServiceWorker from '@hooks/useServiceWorker';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import React from 'react';
+import * as ButtonStyles from '../components/Button.scss';
+import Link from '../components/Link';
 import * as Styles from './App.scss';
 import content from './App.yaml';
 import Logo from './GuildWars/Header/Logo';
@@ -18,12 +20,20 @@ export default function App({ className }) {
       className={Arrays.pack(
         className,
         Styles.App,
-        Layout.Flex,
-        Layout.JustifyCenter,
+        Layout.FlexColumn,
+        Layout.JustifySpaceEvenly,
         Layout.AlignCenter,
       ).join(' ')}
     >
-      <Logo className={LogoStyles.Largest} />
+      <Logo
+        className={Arrays.pack(Styles.Logo, LogoStyles.Largest).join(' ')}
+      />
+      <b.GuildNameDecorative />
+      <div>
+        <Link className={ButtonStyles.Button} href="/gw-timer">
+          <b.WarTimerAppName />
+        </Link>
+      </div>
     </div>
   );
 }
