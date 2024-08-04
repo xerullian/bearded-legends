@@ -5,7 +5,7 @@ import Arrays from '@utils/Arrays';
 import React from 'react';
 import Card from '../../components/Card';
 import { useLocalStorage } from '../../hooks/useStorage';
-import content from '../App.yaml';
+import content from '@content/Content.yaml';
 import Clock from './Header/Clock';
 import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
@@ -65,7 +65,7 @@ export default function WarTimer({ className }) {
                 }
                 nodeDataListId="nodeDataList"
               />
-              <Card.SlideIn>
+              <Card.SlideIn className={Styles.SlideIn}>
                 <Button
                   className={Styles.RemoveButton}
                   onClick={(_domEvent) =>

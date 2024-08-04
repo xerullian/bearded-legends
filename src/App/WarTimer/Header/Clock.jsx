@@ -3,7 +3,7 @@ import useInterval from '@hooks/useInterval';
 import Arrays from '@utils/Arrays';
 import React, { useEffect, useState } from 'react';
 import * as Styles from './Clock.scss';
-import content from './Clock.yaml';
+import content from '@content/Content.yaml';
 import stringToTemplate from '../../../utils/stringToTemplate';
 
 export default function Clock({ className, timeZone = 'UTC' }) {

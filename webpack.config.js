@@ -40,7 +40,6 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                // localIdentName: 'BL-[local]',
                 localIdentName: '[local]__[hash:base64:5]',
               },
             },
@@ -84,6 +83,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components/'),
+      '@content': path.resolve(__dirname, 'src/content/'),
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
       '@styles': path.resolve(__dirname, 'src/styles/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),

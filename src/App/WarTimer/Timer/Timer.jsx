@@ -6,9 +6,8 @@ import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
 import useInterval from '../../../hooks/useInterval';
-import appContent from '../../App.yaml';
+import content from '@content/Content.yaml';
 import * as Styles from './Timer.scss';
-import content from './Timer.yaml';
 import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';
 import TimerLabel from './TimerLabel';
@@ -21,7 +20,7 @@ const EXPIRING_REMAINING_MILLIS = 120_000;
 
 export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
-  const b = useContentBundle(appContent, content);
+  const b = useContentBundle(content);
   const [tick, start, stop] = useInterval({ strict: false });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
 
@@ -217,31 +216,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
               </TimerControl>
             )}
           </div>
-
-          {/* <div
-            className={Arrays.pack(
-              Styles.SlideIn,
-              swipe === 'left' && Styles.Open,
-            ).join(' ')}
-          >
-            <button
-              type="button"
-              onClick={(domEvent) => {
-                onClickResetButton(domEvent);
-                resetSwipe();
-              }}
-            >
-              <div
-                className={Arrays.pack(
-                  Layout.Flex,
-                  Layout.JustifyStart,
-                  Layout.AlignCenter,
-                ).join(' ')}
-              >
-                <b.RemoveButtonLabel />
-              </div>
-            </button>
-          </div> */}
         </div>
       </div>
     </div>

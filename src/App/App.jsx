@@ -6,7 +6,7 @@ import React from 'react';
 import * as ButtonStyles from '../components/Button.scss';
 import Link from '../components/Link';
 import * as Styles from './App.scss';
-import content from './App.yaml';
+import content from '@content/Content.yaml';
 import Logo from './WarTimer/Header/Logo';
 import * as LogoStyles from './WarTimer/Header/Logo.scss';
 

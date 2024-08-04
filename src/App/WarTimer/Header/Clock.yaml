@@ -1,3 +1,0 @@
-en:
-  CurrentTimeMessage: Current time in ${timeZone}
-  CLOCK_FORMAT: ${hour}:${minute}

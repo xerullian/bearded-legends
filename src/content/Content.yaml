@@ -1,0 +1,20 @@
+en:
+  AddButtonLabel: Add
+  CLOCK_FORMAT: ${hour}:${minute}
+  ChatAppName: Discord
+  DefaultTimerName: Timer
+  GameName: Knighthood
+  GuildName: Bearded Legends
+  GuildNameDecorative: ⎯ Bearded ✦ Legends ⎯
+  Hours: hours
+  HoursAbbr: H
+  Minutes: minutes
+  MinutesAbbr: M
+  PauseButtonLabel: Pause
+  RemoveButtonLabel: Remove
+  ResetButtonLabel: Reset
+  ResumeButtonLabel: Resume
+  Seconds: seconds
+  SecondsAbbr: S
+  StartButtonLabel: Start
+  WarTimerAppName: War Timer

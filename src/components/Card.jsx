@@ -55,6 +55,6 @@ export default function Card({ className, children }) {
 
 Card.SlideIn = SlideIn;
 
-export function SlideIn({ children }) {
-  return children;
+function SlideIn({ className, children }) {
+  return <div className={Arrays.pack(className).join(' ')}>{children}</div>;
 }

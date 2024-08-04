@@ -2,7 +2,7 @@ import useContentBundle from '@hooks/useContentBundle';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React from 'react';
-import content from './Timer.yaml';
+import content from '@content/Content.yaml';
 import * as Styles from './TimerDisplay.scss';
 
 export default function TimerDisplay({ className, hours, minutes, seconds }) {
