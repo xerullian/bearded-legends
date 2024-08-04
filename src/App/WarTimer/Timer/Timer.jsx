@@ -1,4 +1,5 @@
 import { SrOnly } from '@components/SrOnly';
+import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
@@ -6,7 +7,6 @@ import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
 import useInterval from '../../../hooks/useInterval';
-import content from '@content/Content.yaml';
 import * as Styles from './Timer.scss';
 import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';

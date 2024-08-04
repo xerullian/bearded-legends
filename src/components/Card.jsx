@@ -1,7 +1,7 @@
+import useSwipe from '@hooks/useSwipe';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import React from 'react';
-import useSwipe from '../hooks/useSwipe';
 import * as Styles from './Card.scss';
 
 export default function Card({ className, children }) {

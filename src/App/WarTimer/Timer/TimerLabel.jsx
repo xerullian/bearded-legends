@@ -1,6 +1,6 @@
+import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import React, { useRef } from 'react';
-import content from '@content/Content.yaml';
 import * as Styles from './TimerLabel.scss';
 
 export default function TimerLabel({ name, setName, dataListId }) {

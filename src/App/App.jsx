@@ -1,3 +1,4 @@
+import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import useServiceWorker from '@hooks/useServiceWorker';
 import * as Layout from '@styles/Layout.scss';
@@ -6,7 +7,6 @@ import React from 'react';
 import * as ButtonStyles from '../components/Button.scss';
 import Link from '../components/Link';
 import * as Styles from './App.scss';
-import content from '@content/Content.yaml';
 import Logo from './WarTimer/Header/Logo';
 import * as LogoStyles from './WarTimer/Header/Logo.scss';
 

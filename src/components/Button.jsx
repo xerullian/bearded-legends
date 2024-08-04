@@ -1,6 +1,6 @@
+import Arrays from '@utils/Arrays';
 import React from 'react';
 import * as Styles from './Button.scss';
-import Arrays from '@utils/Arrays';
 
 export default function Button({ className, children, onClick }) {
   return (
