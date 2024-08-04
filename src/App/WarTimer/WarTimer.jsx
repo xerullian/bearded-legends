@@ -4,6 +4,7 @@ import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import React from 'react';
 import Card from '../../components/Card';
+import { useLocalStorage } from '../../hooks/useStorage';
 import content from '../App.yaml';
 import Clock from './Header/Clock';
 import NodeDataList from './NodeDataList';
@@ -12,9 +13,12 @@ import * as Styles from './WarTimer.scss';
 
 export default function WarTimer({ className }) {
   const b = useContentBundle(content);
+  const [timers, setTimers] = useLocalStorage('BL.WarTimer.Data', []);
 
   const onClickAddButton = (domEvent) => {
-    // TODO Implement me!
+    const _timers = timers.map((timer) => ({ ...timer }));
+    _timers.push({ name: '', startTimestamp: 0, pauseTimestamp: 0 });
+    setTimers(_timers);
   };
 
   return (
@@ -51,51 +55,20 @@ export default function WarTimer({ className }) {
           Layout.Wrap,
         ).join(' ')}
       >
-        <li>
-          <Card>
-            <Timer id="0" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="1" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="2" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="3" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="4" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="5" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="6" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="7" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
-        <li>
-          <Card>
-            <Timer id="8" dataListId={'nodeDataList'} />
-          </Card>
-        </li>
+        {timers.map((timer, index) => (
+          <li key={index}>
+            <Card>
+              <Timer
+                timestamp={timer}
+                setTimestamp={(value) =>
+                  setTimers(timers.map((e, i) => (i === index ? value : e)))
+                }
+                dataListId="nodeDataList"
+              />
+            </Card>
+          </li>
+        ))}
+
         <li>
           <Card className={Styles.Add}>
             <Button onClick={onClickAddButton}>
@@ -104,6 +77,7 @@ export default function WarTimer({ className }) {
           </Card>
         </li>
       </ul>
+
       <NodeDataList />
     </div>
   );

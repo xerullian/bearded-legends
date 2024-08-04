@@ -30,7 +30,7 @@ export default function App({ className }) {
       />
       <b.GuildNameDecorative />
       <div>
-        <Link className={ButtonStyles.Button} href="/gw-timer">
+        <Link className={ButtonStyles.Button} href="/war-timer">
           <b.WarTimerAppName />
         </Link>
 

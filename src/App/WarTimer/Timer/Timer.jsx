@@ -5,9 +5,7 @@ import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
-import Card from '../../../components/Card';
 import useInterval from '../../../hooks/useInterval';
-import { useLocalStorage } from '../../../hooks/useStorage';
 import useSwipe from '../../../hooks/useSwipe';
 import appContent from '../../App.yaml';
 import * as Styles from './Timer.scss';
@@ -20,7 +18,13 @@ const DEFAULT_REMAINING_MILLIS = 1_800_000;
 
 // FIXME auto generate ID if one is not provided
 
-export default function Timer({ id, className, dataListId }) {
+export default function Timer({
+  id,
+  className,
+  dataListId,
+  timestamp,
+  setTimestamp,
+}) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(appContent, content);
   const [swipeRef, swipe, resetSwipe] = useSwipe();
@@ -30,12 +34,6 @@ export default function Timer({ id, className, dataListId }) {
   const [remainingMillis, setRemainingMillis] = useState(
     DEFAULT_REMAINING_MILLIS,
   );
-
-  const [timestamp, setTimestamp] = useLocalStorage(`BL.Timer.${id}`, {
-    name: b.DefaultTimerName(),
-    startTimestamp: 0,
-    pauseTimestamp: 0,
-  });
 
   const { name, startTimestamp, pauseTimestamp } = timestamp;
 
