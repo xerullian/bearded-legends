@@ -1,5 +1,5 @@
 import useContentBundle from '@hooks/useContentBundle';
-import { pack } from '@utils/Arrays';
+import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React from 'react';
 import content from './Timer.yaml';
@@ -10,7 +10,7 @@ export default function TimerDisplay({ className, hours, minutes, seconds }) {
   const b = useContentBundle(content);
 
   return (
-    <div className={pack(className, Styles.TimerDisplay).join(' ')}>
+    <div className={Arrays.pack(className, Styles.TimerDisplay).join(' ')}>
       <div className={Styles.Hours} data-value={hours}>
         {hours}
         <abbr title={b.Hours()}>

@@ -1,4 +1,38 @@
-// FIXME Need to organize the code better
+.Flex {
+  display: flex;
+}
+
+// justify-content
+
+.JustifyCenter {
+  justify-content: center;
+}
+
+.JustifySpaceBetween {
+  justify-content: space-between;
+}
+
+.JustifyStart {
+  justify-content: flex-start;
+}
+
+// align-items
+
+.AlignCenter {
+  align-items: center;
+}
+
+// flex-wrap
+
+.Wrap {
+  flex-wrap: wrap;
+}
+
+.NoWrap {
+  flex-wrap: nowrap;
+}
+
+// FIXME Need to organize the code below
 
 :root {
   --button-border-radius: 0.5rem;
@@ -12,32 +46,6 @@
   font-weight: bold;
   padding: 0.5rem 0.75rem;
   white-space: nowrap;
-}
-
-.FlexSpaceBetween {
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-}
-
-.FlexStart {
-  align-items: center;
-  justify-content: flex-start;
-  display: flex;
-}
-
-.FlexCenter {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-}
-
-.Wrap {
-  flex-wrap: wrap;
-}
-
-.NoWrap {
-  flex-wrap: nowrap;
 }
 
 .TextCenter {

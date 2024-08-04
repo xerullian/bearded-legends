@@ -1,6 +1,6 @@
 import useContentBundle from '@hooks/useContentBundle';
 import useInterval from '@hooks/useInterval';
-import { pack } from '@utils/Arrays';
+import Arrays from '@utils/Arrays';
 import React, { useEffect, useState } from 'react';
 import * as Styles from './Clock.scss';
 import content from './Clock.yaml';
@@ -31,7 +31,7 @@ export default function Clock({ className, timeZone = 'UTC' }) {
   }, [tick]);
 
   return (
-    <div className={pack(className, Styles.Clock).join(' ')}>
+    <div className={Arrays.pack(className, Styles.Clock).join(' ')}>
       <div className={Styles.Time}>
         <div className={Styles.HoursMinutes}>{clock}</div>
         <div className={Styles.TimeZone}>{timeZone}</div>

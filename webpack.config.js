@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   entry: {
-    main: './src/index.js',
+    main: './src/index.jsx',
   },
   output: {
     filename: 'bundle.js',
@@ -15,6 +15,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
       {
         test: /\.scss$/,
         use: [

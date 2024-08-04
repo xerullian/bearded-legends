@@ -1,7 +1,7 @@
 import { SrOnly } from '@components/SrOnly';
 import useContentBundle from '@hooks/useContentBundle';
 import * as Layout from '@styles/Layout.scss';
-import { pack } from '@utils/Arrays';
+import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
@@ -151,10 +151,10 @@ export default function Timer({ id, className, dataListId }) {
   }, [remainingMillis]);
 
   return (
-    <div className={pack(className, Styles.Timer).join(' ')}>
+    <div className={Arrays.pack(className, Styles.Timer).join(' ')}>
       <div
         ref={swipeRef}
-        className={pack(
+        className={Arrays.pack(
           pauseTimestamp && Styles.Paused,
           startTimestamp && Styles.Started,
           !startTimestamp && Styles.Paused,
@@ -170,10 +170,18 @@ export default function Timer({ id, className, dataListId }) {
           setName={setName}
         />
 
-        <div className={Layout.FlexSpaceBetween}>
+        <div
+          className={Arrays.pack(
+            Layout.Flex,
+            Layout.JustifySpaceBetween,
+            Layout.AlignCenter,
+          ).join(' ')}
+        >
           <div
-            className={pack(
-              Layout.FlexStart,
+            className={Arrays.pack(
+              Layout.Flex,
+              Layout.JustifyStart,
+              Layout.AlignCenter,
               Layout.NoWrap,
               swipe === 'left' && Layout.OverflowHidden,
             ).join(' ')}
@@ -222,7 +230,7 @@ export default function Timer({ id, className, dataListId }) {
 
           {/* <div className={Styles.SlideIn} data-open={swipe === 'left'}> */}
           <div
-            className={pack(
+            className={Arrays.pack(
               Styles.SlideIn,
               swipe === 'left' && Styles.Open,
             ).join(' ')}
@@ -234,7 +242,13 @@ export default function Timer({ id, className, dataListId }) {
                 resetSwipe();
               }}
             >
-              <div className={Layout.FlexStart}>
+              <div
+                className={Arrays.pack(
+                  Layout.Flex,
+                  Layout.JustifyStart,
+                  Layout.AlignCenter,
+                ).join(' ')}
+              >
                 <b.RemoveButtonLabel />
               </div>
             </button>

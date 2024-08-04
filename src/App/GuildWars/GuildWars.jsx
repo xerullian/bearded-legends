@@ -1,5 +1,5 @@
 import * as Layout from '@styles/Layout.scss';
-import { pack } from '@utils/Arrays';
+import Arrays from '@utils/Arrays';
 import React from 'react';
 import * as Styles from './GuildWars.scss';
 import Clock from './Header/Clock';
@@ -14,10 +14,23 @@ export default function GuildWars({ className }) {
   const b = useContentBundle(content);
 
   return (
-    <div className={pack(className, Styles.GuildWars).join(' ')}>
-      <div className={Layout.FlexCenter}>
+    <div className={Arrays.pack(className, Styles.GuildWars).join(' ')}>
+      <div
+        className={Arrays.pack(
+          Layout.Flex,
+          Layout.JustifyCenter,
+          Layout.AlignCenter,
+        ).join(' ')}
+      >
         <div>
-          <div className={pack(Layout.FlexCenter, Layout.NoWrap).join(' ')}>
+          <div
+            className={Arrays.pack(
+              Layout.Flex,
+              Layout.JustifyCenter,
+              Layout.AlignCenter,
+              Layout.NoWrap,
+            ).join(' ')}
+          >
             <Logo />
             <Clock className={Styles.Clock} />
           </div>
@@ -26,7 +39,14 @@ export default function GuildWars({ className }) {
           </div>
         </div>
       </div>
-      <div className={pack(Layout.FlexStart, Layout.Wrap).join(' ')}>
+      <div
+        className={Arrays.pack(
+          Layout.Flex,
+          Layout.JustifyStart,
+          Layout.AlignCenter,
+          Layout.Wrap,
+        ).join(' ')}
+      >
         <Card>
           <Timer id="0" dataListId={'nodeDataList'} />
         </Card>

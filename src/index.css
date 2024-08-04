@@ -1,0 +1,19 @@
+html,
+body {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-size: 16px; /* 1rem = 16px by default */
+  margin: 0;
+  padding: 0;
+
+  @media (prefers-color-scheme: light) {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 14px; /* 1rem = 14px */
+  }
+}
