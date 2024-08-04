@@ -3,6 +3,7 @@ en:
   CLOCK_FORMAT: ${hour}:${minute}
   ChatAppName: Discord
   DefaultTimerName: Timer
+  DISCORD_URL: https://bit.ly/bearded-legends
   GameName: Knighthood
   GuildName: Bearded Legends
   GuildNameDecorative: ⎯ Bearded ✦ Legends ⎯

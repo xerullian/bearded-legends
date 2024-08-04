@@ -34,10 +34,7 @@ export default function App({ className }) {
           <b.WarTimerAppName />
         </Link>
 
-        <Link
-          className={ButtonStyles.Button}
-          href="https://bit.ly/bearded-legends"
-        >
+        <Link className={ButtonStyles.Button} href={b.DISCORD_URL()}>
           <b.ChatAppName />
         </Link>
       </div>
