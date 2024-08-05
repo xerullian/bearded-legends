@@ -27,7 +27,7 @@ const EXPIRING_REMAINING_MILLIS = 120_000;
 export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(content);
-  const [tick, start, stop] = useInterval({ strict: false });
+  const [tick, start, stop] = useInterval({ strict: true });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
   const [editorDisplay, setEditorDisplay] = useState(null);
 
@@ -111,10 +111,13 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
         startTimestamp: startTimestamp + elapsed,
         pauseTimestamp: now,
       });
+
+      _logger.info('onStart: Pause', timer.uuid);
     } else if (startTimestamp) {
       // Had the timer been running when browser was refreshed, we should
       // pick up where we originally left off.
       start();
+      _logger.info('onStart: Start', timer.uuid);
     }
   }, []);
 
@@ -137,16 +140,12 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
 
     if (remainingMillis > 0) {
       setDisplay({
-        hours: Math.abs(Math.floor(hours)),
-        minutes: Math.abs(Math.floor(minutes)),
-        seconds: Math.abs(Math.floor(seconds)),
+        hours: Math.floor(hours),
+        minutes: Math.floor(minutes),
+        seconds: Math.floor(seconds),
       });
     } else {
-      setDisplay({
-        hours: Math.abs(Math.ceil(hours)),
-        minutes: Math.abs(Math.ceil(minutes)),
-        seconds: Math.abs(Math.ceil(seconds)),
-      });
+      setDisplay({ hours: 0, minutes: 0, seconds: 0 });
     }
   }, [remainingMillis]);
 

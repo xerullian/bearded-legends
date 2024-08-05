@@ -6,7 +6,8 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
 
   const getDelay = () => {
     if (strict) {
-      return delay - (Date.now() % delay);
+      const offset = Date.now() % delay;
+      return delay - offset;
     }
 
     return delay;
@@ -14,20 +15,16 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
 
   const next = () => {
     setTick((x) => !x);
-
-    setTid(
-      setTimeout(() => {
-        next();
-      }, getDelay()),
-    );
+    setTid(setTimeout(next, getDelay()));
   };
 
   const stop = () => {
     clearTimeout(tid);
+    setTid(0);
   };
 
   const start = () => {
-    clearTimeout(tid);
+    stop();
     next();
   };
 
