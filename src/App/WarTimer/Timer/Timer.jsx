@@ -5,12 +5,18 @@ import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import { ArrowClockwise, PauseCircle, PlayCircle } from 'react-bootstrap-icons';
+import {
+  ArrowClockwise,
+  PauseCircle,
+  PlayCircle,
+  XCircle,
+} from 'react-bootstrap-icons';
 import useInterval from '../../../hooks/useInterval';
 import * as Styles from './Timer.scss';
 import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';
 import TimerLabel from './TimerLabel';
+import Animation from '../../../components/Animation';
 
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
 const WARNING_REMAINING_MILLIS = 240_000;
@@ -23,6 +29,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const b = useContentBundle(content);
   const [tick, start, stop] = useInterval({ strict: false });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
+  const [editorDisplay, setEditorDisplay] = useState(null);
 
   const [remainingMillis, setRemainingMillis] = useState(
     DEFAULT_REMAINING_MILLIS,
@@ -80,13 +87,15 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     setRemainingMillis(DEFAULT_REMAINING_MILLIS);
   };
 
-  const onClickSuperButton = (_domEvent) => {
-    if (!startTimestamp) {
-      onClickStartButton(_domEvent);
-    } else if (startTimestamp && pauseTimestamp) {
-      onClickResumeButton(_domEvent);
+  const onClickSuperButton = (domEvent) => {
+    if (remainingMillis < 0) {
+      onClickResetButton(domEvent);
+    } else if (pauseTimestamp) {
+      onClickResumeButton(domEvent);
+    } else if (!startTimestamp) {
+      onClickStartButton(domEvent);
     } else if (!pauseTimestamp) {
-      onClickPauseButton(_domEvent);
+      onClickPauseButton(domEvent);
     }
   };
 
@@ -176,7 +185,14 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
             ).join(' ')}
           >
             <TimerControl onClick={onClickSuperButton}>
-              {pauseTimestamp ? (
+              {remainingMillis < 0 ? (
+                <>
+                  <XCircle />
+                  <SrOnly>
+                    <b.ResetButtonLabel />
+                  </SrOnly>
+                </>
+              ) : pauseTimestamp ? (
                 <>
                   <PlayCircle />
                   <SrOnly>
@@ -200,21 +216,25 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
               )}
             </TimerControl>
 
+            <Animation
+              display={remainingMillis > 0 && !!pauseTimestamp}
+              expand={Styles.Expand}
+              collapse={Styles.Collapse}
+            >
+              <TimerControl onClick={onClickResetButton}>
+                <XCircle />
+                <SrOnly>
+                  <b.ResetButtonLabel />
+                </SrOnly>
+              </TimerControl>
+            </Animation>
+
             <TimerDisplay
               className={Styles.Display}
               hours={hours}
               minutes={minutes}
               seconds={seconds}
             />
-
-            {!!pauseTimestamp && (
-              <TimerControl onClick={onClickResetButton}>
-                <ArrowClockwise />
-                <SrOnly>
-                  <b.ResetButtonLabel />
-                </SrOnly>
-              </TimerControl>
-            )}
           </div>
         </div>
       </div>

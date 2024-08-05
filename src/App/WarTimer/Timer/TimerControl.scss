@@ -1,13 +1,28 @@
 .TimerControl {
+  @keyframes expand {
+    from {
+      min-width: 0;
+      width: 0;
+    }
+    to {
+      min-width: 2.75rem;
+      width: 2rem;
+    }
+  }
+
   button {
     background-color: transparent;
     border: 0;
     color: inherit;
     font-size: 1.5rem;
     min-height: 2.75rem;
-    min-width: 2.75rem;
     padding: 0;
     vertical-align: middle;
+
+    // overflow: hidden;
+    // width: 0;
+    // animation: expand 0.2s ease-out forwards;
+    width: 2.75rem;
 
     svg {
       height: 2rem;

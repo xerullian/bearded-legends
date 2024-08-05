@@ -28,12 +28,6 @@
     }
   }
 
-  // TODO Clean this up
-  & > div > div > div {
-    display: flex;
-    align-items: center;
-  }
-
   .Label {
     content: '';
   }
@@ -44,5 +38,43 @@
 
   .Control {
     content: '';
+  }
+
+  @mixin expanded {
+    overflow: auto;
+    transform: scaleX(1);
+    width: 2.75rem;
+  }
+
+  @mixin collapsed {
+    overflow: hidden;
+    transform: scaleX(0);
+    width: 0;
+  }
+
+  @keyframes expand {
+    from {
+      @include collapsed;
+    }
+    to {
+      @include expanded;
+    }
+  }
+
+  @keyframes collapse {
+    from {
+      @include expanded;
+    }
+    to {
+      @include collapsed;
+    }
+  }
+
+  .Expand {
+    animation: expand 0.2s ease-out forwards;
+  }
+
+  .Collapse {
+    animation: collapse 0.2s ease-out forwards;
   }
 }

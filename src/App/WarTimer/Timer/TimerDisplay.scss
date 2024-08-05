@@ -1,8 +1,8 @@
 @import '@styles/Typography.scss';
 
 .TimerDisplay {
-  // @include Monospace;
-  @include Troika;
+  @include Monospace;
+  // @include Troika;
   align-items: baseline;
   display: flex;
 
@@ -26,6 +26,42 @@
 
   .Seconds {
     font-size: 2rem;
+  }
+
+  .Hours,
+  .Minutes,
+  .Seconds {
+    position: relative;
+
+    input {
+      @include Monospace;
+      // @include Troika;
+      -moz-appearance: textfield;
+      color: var(--color-cyan);
+      cursor: pointer;
+      background-color: transparent;
+      border: 0;
+      font-size: inherit;
+      height: 100%;
+      left: 0;
+      margin: 0;
+      opacity: 0;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+
+      &:focus {
+        opacity: 1;
+      }
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
   }
 
   abbr {

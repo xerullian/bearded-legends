@@ -1,5 +1,6 @@
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
+import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React from 'react';
@@ -10,25 +11,38 @@ export default function TimerDisplay({ className, hours, minutes, seconds }) {
   const b = useContentBundle(content);
 
   return (
-    <div className={Arrays.pack(className, Styles.TimerDisplay).join(' ')}>
+    <div
+      className={Arrays.pack(
+        className,
+        Styles.TimerDisplay,
+        Layout.FlexRow,
+        Layout.JustifyStart,
+        Layout.AlignBaseline,
+      ).join(' ')}
+    >
       <div className={Styles.Hours} data-value={hours}>
         {hours}
-        <abbr title={b.Hours()}>
-          <b.HoursAbbr />
-        </abbr>
+        <input type="number"></input>
       </div>
+      <abbr title={b.Hours()} data-value={hours}>
+        <b.HoursAbbr />
+      </abbr>
       <div className={Styles.Minutes}>
-        {hours ? String(minutes).padStart(2, '0') : minutes}
-        <abbr title={b.Minutes()}>
-          <b.MinutesAbbr />
-        </abbr>
+        {hours
+          ? String(minutes || 0).padStart(2, '0')
+          : String(minutes || 0).padStart(2, '0')}
+        <input type="number"></input>
       </div>
+      <abbr title={b.Minutes()}>
+        <b.MinutesAbbr />
+      </abbr>
       <div className={Styles.Seconds}>
-        {seconds}
-        <abbr title={b.Seconds()}>
-          <b.SecondsAbbr />
-        </abbr>
+        {String(seconds || 0).padStart(2, '0')}
+        <input type="number"></input>
       </div>
+      <abbr title={b.Seconds()}>
+        <b.SecondsAbbr />
+      </abbr>
     </div>
   );
 }
