@@ -5,16 +5,18 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
   const [tick, setTick] = useState(false);
 
   const getDelay = () => {
+    const elapsed = Date.now() - tick;
+
     if (strict) {
-      const offset = Date.now() % delay;
-      return delay - offset;
+      const offset = delay - elapsed;
+      return offset > 0 ? offset : 0;
     }
 
     return delay;
   };
 
   const next = () => {
-    setTick((x) => !x);
+    setTick(Date.now());
     setTid(setTimeout(next, getDelay()));
   };
 

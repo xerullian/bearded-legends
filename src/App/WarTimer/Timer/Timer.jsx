@@ -5,18 +5,13 @@ import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
-import {
-  ArrowClockwise,
-  PauseCircle,
-  PlayCircle,
-  XCircle,
-} from 'react-bootstrap-icons';
+import { PauseCircle, PlayCircle, XCircle } from 'react-bootstrap-icons';
+import Animation from '../../../components/Animation';
 import useInterval from '../../../hooks/useInterval';
 import * as Styles from './Timer.scss';
 import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';
 import TimerLabel from './TimerLabel';
-import Animation from '../../../components/Animation';
 
 const DEFAULT_REMAINING_MILLIS = 1_800_000;
 const WARNING_REMAINING_MILLIS = 240_000;
