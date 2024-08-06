@@ -8,8 +8,7 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
     const elapsed = Date.now() - tick;
 
     if (strict) {
-      const offset = delay - elapsed;
-      return offset > 0 ? offset : 0;
+      return delay - elapsed;
     }
 
     return delay;
