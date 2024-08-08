@@ -1,6 +1,8 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { version } = require('./package.json');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   mode: 'development',
@@ -9,7 +11,7 @@ module.exports = {
     main: './src/index.jsx',
   },
   output: {
-    filename: 'bundle.js',
+    filename: `bundle-${version}-${uuidv4()}.js`,
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
@@ -66,7 +68,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './public/index.ejs',
       inlineSource: '.(js|css)$',
     }),
     new CopyWebpackPlugin({

@@ -3,15 +3,16 @@ import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
-import React, { useEffect } from 'react';
+import Logger from '@utils/Logger';
+import React from 'react';
+import { PlusCircle } from 'react-bootstrap-icons';
+import { v4 as uuidv4 } from 'uuid';
 import Card from '../../components/Card';
 import { useLocalStorage } from '../../hooks/useStorage';
 import Clock from './Header/Clock';
 import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
 import * as Styles from './WarTimer.scss';
-import { v4 as uuidv4 } from 'uuid';
-import Logger from '@utils/Logger';
 
 export default function WarTimer({ className }) {
   const _logger = new Logger('WarTimer');
@@ -96,16 +97,12 @@ export default function WarTimer({ className }) {
 
         <li>
           <Card className={Styles.Card}>
-            <div
-              className={Arrays.pack(
-                Layout.FullWidth,
-                Layout.FlexRow,
-                Layout.JustifyCenter,
-                Layout.AlignStart,
-              ).join(' ')}
-            >
-              <Button className={Styles.AddButton} onClick={onClickAddButton}>
-                <b.AddButtonLabel />
+            <div className={Styles.AddButton}>
+              <Button onClick={onClickAddButton}>
+                <PlusCircle />
+                <div>
+                  <b.AddButtonLabel />
+                </div>
               </Button>
             </div>
           </Card>

@@ -1,11 +1,12 @@
 import useSwipe from '@hooks/useSwipe';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Styles from './Card.scss';
 
 export default function Card({ className, children }) {
   const [swipeRef, swipe] = useSwipe();
+  const [edit, setEdit] = useState(false);
 
   const frontChildren = React.Children.toArray(children).filter(
     (child) => child.type !== SlideIn,
@@ -15,9 +16,15 @@ export default function Card({ className, children }) {
     (child) => child.type === SlideIn,
   );
 
+  useEffect(() => {
+    setEdit(swipe === 'left');
+  }, [swipe]);
+
   return (
     <div
-      className={Arrays.pack(className, Styles.Card).join(' ')}
+      className={Arrays.pack(className, Styles.Card, edit && Styles.Flip).join(
+        ' ',
+      )}
       ref={swipeRef}
     >
       <div
@@ -26,14 +33,12 @@ export default function Card({ className, children }) {
           Layout.FlexRow,
           Layout.JustifySpaceBetween,
           Layout.AlignStart,
-          swipe === 'left' && Styles.Flip,
         ).join(' ')}
       >
         <div
-          className={Arrays.pack(
-            Styles.Front,
-            swipe === 'left' && Styles.Collapse,
-          ).join(' ')}
+          className={Arrays.pack(Styles.Front, edit && Styles.Collapse).join(
+            ' ',
+          )}
         >
           {frontChildren}
         </div>
@@ -43,7 +48,7 @@ export default function Card({ className, children }) {
             Styles.SlideIn,
             Layout.FlexRow,
             Layout.JustifyEnd,
-            swipe === 'left' && Styles.Open,
+            edit && Styles.Open,
           ).join(' ')}
         >
           {slideInChildren}

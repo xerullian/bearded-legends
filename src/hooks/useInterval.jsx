@@ -13,9 +13,6 @@ export default function useInterval({
     const elapsed = now.getTime() - tick;
 
     if (onTheMinute) {
-      // This gets relatively close to firing the event when the second hand
-      // hits 0 on the clock, but on my machine, it is consistently late by
-      // roughly 50ms. This is close enough for now.
       return delay - now.getUTCMilliseconds();
     }
 
