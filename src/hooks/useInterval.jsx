@@ -1,36 +1,37 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import Logger from '@utils/Logger';
 
-export default function useInterval({
-  delay = 1000,
-  strict = false,
-  onTheMinute,
-} = {}) {
-  const [tid, setTid] = useState(0);
+export default function useInterval({ delay = 1000, strict = false } = {}) {
+  const _logger = new Logger('useInterval');
+  // const [tid, setTid] = useState(0);
+  const tidRef = useRef();
+  const lastRef = useRef();
   const [tick, setTick] = useState(false);
 
   const getDelay = () => {
-    const now = new Date();
-    const elapsed = now.getTime() - tick;
+    const now = Date.now();
 
-    if (onTheMinute) {
-      return delay - now.getUTCMilliseconds();
+    if (lastRef.current) {
+      const elapsed = now - lastRef.current;
+
+      lastRef.current = now;
+
+      if (strict) {
+        delay -= elapsed;
+      }
     }
 
-    if (strict) {
-      return delay - elapsed;
-    }
-
-    return delay;
+    return delay - 100;
   };
 
   const next = () => {
-    setTick(Date.now());
-    setTid(setTimeout(next, getDelay()));
+    setTick((x) => !x);
+    tidRef.current = setTimeout(next, getDelay());
   };
 
   const stop = () => {
-    clearTimeout(tid);
-    setTid(0);
+    clearTimeout(tidRef.current);
+    tidRef.current = 0;
   };
 
   const start = () => {

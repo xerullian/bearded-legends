@@ -1,18 +1,21 @@
+import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import useInterval from '@hooks/useInterval';
 import Arrays from '@utils/Arrays';
+import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import * as Styles from './Clock.scss';
-import content from '@content/Content.yaml';
-import stringToTemplate from '../../../utils/stringToTemplate';
 
 export default function Clock({ className, timeZone = 'UTC' }) {
-  const [tick, start] = useInterval({ strict: true, onTheMinute: true });
-  const b = useContentBundle(content);
+  const _logger = new Logger('Clock');
+  const _b = useContentBundle(content);
+  const [tick, start] = useInterval({ strict: true });
   const [clock, setClock] = useState({});
-  const CLOCK_FORMAT = b.CLOCK_FORMAT();
 
-  useEffect(() => start(), []);
+  useEffect(() => {
+    start();
+    _logger.log('start');
+  }, []);
 
   useEffect(() => {
     const now = new Date();

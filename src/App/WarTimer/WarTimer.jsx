@@ -14,6 +14,8 @@ import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
 import * as Styles from './WarTimer.scss';
 
+const DEFAULT_REMAINING_MILLIS = 1_800_000;
+
 export default function WarTimer({ className }) {
   const _logger = new Logger('WarTimer');
   const b = useContentBundle(content);
@@ -27,6 +29,8 @@ export default function WarTimer({ className }) {
       name: '',
       startTimestamp: 0,
       pauseTimestamp: 0,
+      endTimestamp: DEFAULT_REMAINING_MILLIS,
+      remainingMillis: DEFAULT_REMAINING_MILLIS,
     });
 
     setTimers(_timers);
@@ -73,7 +77,9 @@ export default function WarTimer({ className }) {
                 timer={timer}
                 setTimer={(value) =>
                   // Replace the timer value that was updated by the caller.
-                  setTimers(timers.map((e, i) => (i === index ? value : e)))
+                  setTimers(
+                    timers.map((e, i) => (i === index ? { ...value } : e)),
+                  )
                 }
                 nodeDataListId="nodeDataList"
               />

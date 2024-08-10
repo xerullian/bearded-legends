@@ -6,55 +6,70 @@ import Logger from '@utils/Logger';
 import React, { useRef, useState } from 'react';
 import * as Styles from './TimerDisplay.scss';
 
-export default function TimerDisplay({ className, hours, minutes, seconds }) {
+export default function TimerDisplay({
+  className,
+  hours,
+  minutes,
+  seconds,
+  adjustRemainingMillis,
+}) {
   const _logger = new Logger('TimerDisplay');
   const b = useContentBundle(content);
-  const [buffer, setBuffer] = useState({});
-  const hoursInputRef = useRef(null);
-  const minutesInputRef = useRef(null);
-  const secondsInputRef = useRef(null);
+  const [buffer, setBuffer] = useState({ hours: '', minutes: '', seconds: '' });
+  const ref = useRef(null);
 
-  const onChangeHours = (domEvent) => {
-    setBuffer({ ...buffer, hours: domEvent.target.value });
-  };
+  const onFocus = (domEvent) => {
+    const { target } = domEvent;
+    const el = target.closest('[class]');
 
-  const onFocusHours = (_domEvent) => {
-    setBuffer({ ...buffer, hours });
+    if (el.classList.contains(Styles.Hours)) {
+      setBuffer({ ...buffer, hours });
+    }
+
+    if (el.classList.contains(Styles.Minutes)) {
+      setBuffer({ ...buffer, minutes });
+    }
+
+    if (el.classList.contains(Styles.Seconds)) {
+      setBuffer({ ...buffer, seconds });
+    }
 
     setTimeout(() => {
-      const el = hoursInputRef.current;
-      el.selectionStart = el.selectionEnd = el.value.length;
+      target.selectionStart = target.selectionEnd = target.value.length;
     });
   };
 
-  const onChangeMinutes = (domEvent) => {
-    setBuffer({ ...buffer, minutes: domEvent.target.value });
+  const onChange = (domEvent) => {
+    const { target } = domEvent;
+    const { value } = target;
+    const el = target.closest('[class]');
+
+    if (el.classList.contains(Styles.Hours)) {
+      setBuffer({ ...buffer, hours: value });
+    }
+
+    if (el.classList.contains(Styles.Minutes)) {
+      setBuffer({ ...buffer, minutes: value });
+    }
+
+    if (el.classList.contains(Styles.Seconds)) {
+      setBuffer({ ...buffer, seconds: value });
+    }
   };
 
-  const onFocusMinutes = (_domEvent) => {
-    setBuffer({ ...buffer, minutes: String(minutes).padStart(2, '0') });
+  const onBlur = (domEvent) => {
+    onChange(domEvent);
 
-    setTimeout(() => {
-      const el = minutesInputRef.current;
-      el.selectionStart = el.selectionEnd = el.value.length;
-    });
-  };
-
-  const onChangeSeconds = (domEvent) => {
-    setBuffer({ ...buffer, seconds: domEvent.target.value });
-  };
-
-  const onFocusSeconds = (_domEvent) => {
-    setBuffer({ ...buffer, seconds: String(seconds).padStart(2, '0') });
-
-    setTimeout(() => {
-      const el = secondsInputRef.current;
-      el.selectionStart = el.selectionEnd = el.value.length;
-    });
+    adjustRemainingMillis(
+      Number(buffer.hours || hours) * 3_600_000 +
+        Number(buffer.minutes || minutes) * 60_000 +
+        Number(buffer.seconds || seconds) * 1_000,
+    );
   };
 
   return (
     <div
+      ref={ref}
       className={Arrays.pack(
         className,
         Styles.TimerDisplay,
@@ -67,13 +82,13 @@ export default function TimerDisplay({ className, hours, minutes, seconds }) {
         {hours}
         <label>
           <input
-            ref={hoursInputRef}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
             value={buffer.hours}
-            onChange={onChangeHours}
-            onFocus={onFocusHours}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           ></input>
           <abbr title={b.Hours()}>
             <b.HoursAbbr />
@@ -86,13 +101,13 @@ export default function TimerDisplay({ className, hours, minutes, seconds }) {
           : String(minutes || 0).padStart(2, '0')}
         <label>
           <input
-            ref={minutesInputRef}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
             value={buffer.minutes}
-            onChange={onChangeMinutes}
-            onFocus={onFocusMinutes}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           ></input>
           <abbr title={b.Minutes()}>
             <b.MinutesAbbr />
@@ -103,13 +118,13 @@ export default function TimerDisplay({ className, hours, minutes, seconds }) {
         {String(seconds || 0).padStart(2, '0')}
         <label>
           <input
-            ref={secondsInputRef}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
             value={buffer.seconds}
-            onChange={onChangeSeconds}
-            onFocus={onFocusSeconds}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           ></input>
           <abbr title={b.Seconds()}>
             <b.SecondsAbbr />
