@@ -3,7 +3,6 @@ import Logger from '@utils/Logger';
 
 export default function useInterval({ delay = 1000, strict = false } = {}) {
   const _logger = new Logger('useInterval');
-  // const [tid, setTid] = useState(0);
   const tidRef = useRef();
   const lastRef = useRef();
   const [tick, setTick] = useState(false);
@@ -12,16 +11,23 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
     const now = Date.now();
 
     if (lastRef.current) {
-      const elapsed = now - lastRef.current;
-
       lastRef.current = now;
 
       if (strict) {
-        delay -= elapsed;
+        const elapsed = now - lastRef.current;
+        const lag = elapsed - delay;
+
+        // More time has passed since the last task execution than the
+        // specified delay. Compensate the next task execution so it is
+        // more likely to be on time.
+
+        if (lag > 0) {
+          delay -= 2 * lag;
+        }
       }
     }
 
-    return delay - 100;
+    return delay - 100; //FIXME Better way to handle the first time execution
   };
 
   const next = () => {
