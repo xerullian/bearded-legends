@@ -32,7 +32,7 @@ export default function Clock({ className, tick, timeZone = 'UTC' }) {
       <div className={Styles.Time}>
         <div className={Styles.TimeDisplay}>
           {clock.hours}:{clock.minutes}
-          <small>.{clock.seconds}</small>
+          {/* <small>.{clock.seconds}</small> */}
         </div>
         <div className={Styles.TimeZone}>{timeZone}</div>
       </div>
