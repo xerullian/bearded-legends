@@ -1,15 +1,17 @@
+import Animation from '@components/Animation';
+import TimerButton from '@components/IconButton';
 import SrOnly from '@components/SrOnly';
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
+import useInterval from '@hooks/useInterval';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
+
 import React, { useEffect, useState } from 'react';
 import { PauseCircle, PlayCircle, XCircle } from 'react-bootstrap-icons';
-import Animation from '../../../components/Animation';
-import useInterval from '../../../hooks/useInterval';
+
 import * as Styles from './Timer.scss';
-import TimerControl from './TimerControl';
 import TimerDisplay from './TimerDisplay';
 import TimerLabel from './TimerLabel';
 
@@ -36,32 +38,27 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   };
 
   const onClickStartButton = (_domEvent) => {
-    const now = Date.now();
     start();
-    setTimer({ ...timer, startTimestamp: now });
+    setTimer({ ...timer, startTimestamp: Date.now() });
   };
 
   const onClickPauseButton = (_domEvent) => {
-    if (!pauseTimestamp) {
-      stop();
-      setTimer({ ...timer, pauseTimestamp: Date.now() });
-    }
+    stop();
+    setTimer({ ...timer, pauseTimestamp: Date.now() });
   };
 
   const onClickResumeButton = (_domEvent) => {
-    if (pauseTimestamp) {
-      const now = Date.now();
-      const elapsed = now - pauseTimestamp;
+    const now = Date.now();
+    const elapsed = now - pauseTimestamp;
 
-      setTimer({
-        ...timer,
-        startTimestamp: now,
-        pauseTimestamp: 0,
-        endTimestamp: endTimestamp + elapsed,
-      });
+    setTimer({
+      ...timer,
+      startTimestamp: now,
+      pauseTimestamp: 0,
+      endTimestamp: endTimestamp + elapsed,
+    });
 
-      start();
-    }
+    start();
   };
 
   const onClickResetButton = (_domEvent) => {
@@ -71,6 +68,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
       ...timer,
       startTimestamp: 0,
       pauseTimestamp: 0,
+      endTimestamp: DEFAULT_REMAINING_MILLIS,
       remainingMillis: DEFAULT_REMAINING_MILLIS,
     });
   };
@@ -198,7 +196,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
               Layout.NoWrap,
             ).join(' ')}
           >
-            <TimerControl onClick={onClickSuperButton}>
+            <TimerButton onClick={onClickSuperButton}>
               {remainingMillis < 0 ? (
                 <>
                   <XCircle />
@@ -228,19 +226,19 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
                   </SrOnly>
                 </>
               )}
-            </TimerControl>
+            </TimerButton>
 
             <Animation
               display={remainingMillis > 0 && !!pauseTimestamp}
               expand={Styles.Expand}
               collapse={Styles.Collapse}
             >
-              <TimerControl onClick={onClickResetButton}>
+              <TimerButton onClick={onClickResetButton}>
                 <XCircle />
                 <SrOnly>
                   <b.ResetButtonLabel />
                 </SrOnly>
-              </TimerControl>
+              </TimerButton>
             </Animation>
 
             <TimerDisplay
