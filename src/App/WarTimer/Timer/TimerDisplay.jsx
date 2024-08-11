@@ -3,7 +3,9 @@ import useContentBundle from '@hooks/useContentBundle';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
+
 import React, { useRef, useState } from 'react';
+
 import * as Styles from './TimerDisplay.scss';
 
 export default function TimerDisplay({
@@ -15,8 +17,8 @@ export default function TimerDisplay({
 }) {
   const _logger = new Logger('TimerDisplay');
   const b = useContentBundle(content);
-  const [buffer, setBuffer] = useState({ hours: '', minutes: '', seconds: '' });
   const ref = useRef(null);
+  const [buffer, setBuffer] = useState({ hours: '', minutes: '', seconds: '' });
 
   const onFocus = (domEvent) => {
     const { target } = domEvent;
@@ -72,23 +74,25 @@ export default function TimerDisplay({
         Layout.AlignBaseline,
       ).join(' ')}
     >
-      <div className={Styles.Hours}>
-        {hours}
-        <label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={buffer.hours}
-            onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-          ></input>
-          <abbr title={b.Hours()}>
-            <b.HoursAbbr />
-          </abbr>
-        </label>
-      </div>
+      {!!hours && (
+        <div className={Styles.Hours}>
+          {hours}
+          <label>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={buffer.hours}
+              onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            ></input>
+            <abbr title={b.Hours()}>
+              <b.HoursAbbr />
+            </abbr>
+          </label>
+        </div>
+      )}
       <div className={Styles.Minutes}>
         {hours
           ? String(minutes || 0).padStart(2, '0')
