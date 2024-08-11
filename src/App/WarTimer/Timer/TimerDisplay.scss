@@ -37,7 +37,7 @@
       @include Monospace;
       color: var(--color-cyan);
       cursor: pointer;
-      background-color: transparent;
+      background-color: var(--color-black);
       border: 0;
       font-size: inherit;
       height: 100%;
@@ -51,9 +51,9 @@
       z-index: 1;
 
       &:focus {
-        opacity: 1;
         border: 0;
         border-bottom: 0.125rem solid var(--color-cyan);
+        opacity: 1;
         outline: 0;
         padding-bottom: 0.25rem;
       }

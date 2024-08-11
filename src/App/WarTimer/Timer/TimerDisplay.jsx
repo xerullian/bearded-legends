@@ -1,3 +1,4 @@
+import SrOnly from '@components/SrOnly';
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
 import * as Layout from '@styles/Layout.scss';
@@ -44,9 +45,9 @@ export default function TimerDisplay({
   const onFocus = (domEvent) => {
     const { target } = domEvent;
 
-    setHoursBuffer(String(hours));
-    setMinutesBuffer(String(minutes).padStart(2, '0'));
-    setSecondsBuffer(String(seconds).padStart(2, '0'));
+    setHoursBuffer(hours);
+    setMinutesBuffer(minutes);
+    setSecondsBuffer(seconds);
 
     setTimeout(() => {
       target.selectionStart = target.selectionEnd = target.value.length;
@@ -90,25 +91,30 @@ export default function TimerDisplay({
       ).join(' ')}
     >
       {!!hours && (
-        <div className={Styles.Hours}>
-          {hours}
-          <label>
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              value={hoursBuffer}
-              onChange={onChange}
-              onFocus={onFocus}
-              onBlur={onSubmit}
-              onSubmit={onSubmit}
-            />
+        <>
+          <div className={Styles.Hours}>
+            {hours}
+            <label>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={hoursBuffer}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onSubmit}
+                onSubmit={onSubmit}
+              />
+              <SrOnly>
+                <b.Hours />
+              </SrOnly>
+            </label>
+          </div>
 
-            <abbr title={b.Hours()}>
-              <b.HoursAbbr />
-            </abbr>
-          </label>
-        </div>
+          <abbr title={b.Hours()}>
+            <b.HoursAbbr />
+          </abbr>
+        </>
       )}
 
       <div className={Styles.Minutes}>
@@ -128,11 +134,15 @@ export default function TimerDisplay({
             onSubmit={onSubmit}
           />
 
-          <abbr title={b.Minutes()}>
-            <b.MinutesAbbr />
-          </abbr>
+          <SrOnly>
+            <b.Minutes />
+          </SrOnly>
         </label>
       </div>
+
+      <abbr title={b.Minutes()}>
+        <b.MinutesAbbr />
+      </abbr>
 
       <div className={Styles.Seconds}>
         {String(seconds || 0).padStart(2, '0')}
@@ -149,11 +159,15 @@ export default function TimerDisplay({
             onSubmit={onSubmit}
           />
 
-          <abbr title={b.Seconds()}>
-            <b.SecondsAbbr />
-          </abbr>
+          <SrOnly>
+            <b.Seconds />
+          </SrOnly>
         </label>
       </div>
+
+      <abbr title={b.Seconds()}>
+        <b.SecondsAbbr />
+      </abbr>
     </div>
   );
 }
