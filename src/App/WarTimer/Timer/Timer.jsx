@@ -46,11 +46,16 @@ export default function Timer({
         pauseTimestamp: now,
         endTimestamp: now + newRemainingMillis,
       });
-    } else {
+    } else if (startTimestamp) {
       setTimer({
         ...timer,
         startTimestamp: now,
         endTimestamp: now + newRemainingMillis,
+      });
+    } else {
+      setTimer({
+        ...timer,
+        endTimestamp: startTimestamp + newRemainingMillis,
       });
     }
 
