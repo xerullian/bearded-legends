@@ -20,19 +20,13 @@ export default function TimerDisplay({
 
   const onFocus = (domEvent) => {
     const { target } = domEvent;
-    const el = target.closest('[class]');
 
-    if (el.classList.contains(Styles.Hours)) {
-      setBuffer({ ...buffer, hours });
-    }
-
-    if (el.classList.contains(Styles.Minutes)) {
-      setBuffer({ ...buffer, minutes });
-    }
-
-    if (el.classList.contains(Styles.Seconds)) {
-      setBuffer({ ...buffer, seconds });
-    }
+    setBuffer({
+      ...buffer,
+      hours: String(hours),
+      minutes: String(minutes).padStart(2, '0'),
+      seconds: String(seconds).padStart(2, '0'),
+    });
 
     setTimeout(() => {
       target.selectionStart = target.selectionEnd = target.value.length;
@@ -61,9 +55,9 @@ export default function TimerDisplay({
     onChange(domEvent);
 
     adjustRemainingMillis(
-      Number(buffer.hours || hours) * 3_600_000 +
-        Number(buffer.minutes || minutes) * 60_000 +
-        Number(buffer.seconds || seconds) * 1_000,
+      Number(buffer.hours || 0) * 3_600_000 +
+        Number(buffer.minutes || 0) * 60_000 +
+        Number(buffer.seconds || 0) * 1_000,
     );
   };
 

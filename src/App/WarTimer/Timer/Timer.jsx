@@ -22,7 +22,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const b = useContentBundle(content);
   const [tick, start, stop] = useInterval({ strict: true });
   const [{ hours, minutes, seconds }, setDisplay] = useState({});
-  const [editorDisplay, setEditorDisplay] = useState(null);
 
   const {
     name,
@@ -88,17 +87,17 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     }
   };
 
-  const adjustRemainingMillis = (_remainingMillis) => {
+  const adjustRemainingMillis = (newRemainingMillis) => {
     if (startTimestamp) {
       setTimer({
         ...timer,
-        startTimestamp: (pauseTimestamp || startTimestamp) - _remainingMillis,
-        remainingMillis: _remainingMillis,
+        startTimestamp: (pauseTimestamp || startTimestamp) - newRemainingMillis,
+        remainingMillis: newRemainingMillis,
       });
     } else {
       setTimer({
         ...timer,
-        remainingMillis: _remainingMillis,
+        remainingMillis: newRemainingMillis,
       });
     }
   };

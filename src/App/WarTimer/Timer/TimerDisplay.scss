@@ -7,7 +7,7 @@
   display: flex;
 
   & > * {
-    margin-left: 0.25rem;
+    margin-left: 0.75rem;
 
     &[data-value='0'] {
       margin-left: 0;
@@ -35,8 +35,6 @@
 
     input {
       @include Monospace;
-      // @include Troika;
-      -moz-appearance: textfield;
       color: var(--color-cyan);
       cursor: pointer;
       background-color: transparent;
@@ -54,12 +52,10 @@
 
       &:focus {
         opacity: 1;
-      }
-
-      &::-webkit-inner-spin-button,
-      &::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+        border: 0;
+        border-bottom: 0.125rem solid var(--color-cyan);
+        outline: 0;
+        padding-bottom: 0.25rem;
       }
     }
   }
