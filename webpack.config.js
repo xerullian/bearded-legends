@@ -78,6 +78,7 @@ module.exports = {
         { from: './**/*.ico', to: './', context: 'public' },
         { from: './**/*.png', to: './', context: 'public' },
         { from: './thirdparty/**/*', to: './', context: 'public' },
+        { from: './database/**/*', to: './', context: 'public' },
       ],
     }),
   ],
