@@ -23,7 +23,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(content);
   const [tick, start, stop] = useInterval({ strict: true });
-  const [{ hours, minutes, seconds }, setDisplay] = useState({});
 
   const {
     name,
@@ -85,19 +84,15 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     }
   };
 
-  const adjustRemainingMillis = (newRemainingMillis) => {
-    if (startTimestamp) {
-      setTimer({
-        ...timer,
-        startTimestamp: (pauseTimestamp || startTimestamp) - newRemainingMillis,
-        remainingMillis: newRemainingMillis,
-      });
-    } else {
-      setTimer({
-        ...timer,
-        remainingMillis: newRemainingMillis,
-      });
-    }
+  const setRemainingMillis = (newRemainingMillis) => {
+    const now = Date.now();
+
+    setTimer({
+      ...timer,
+      startTimestamp: now,
+      endTimestamp: now + newRemainingMillis,
+      remainingMillis: newRemainingMillis,
+    });
   };
 
   useEffect(() => {
@@ -137,31 +132,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
       endTimestamp: startTimestamp + remainingMillis,
     });
   }, [startTimestamp]);
-
-  useEffect(() => {
-    const _remainingMillis = Math.abs(remainingMillis);
-    const remainingSeconds = _remainingMillis / 1000;
-    const remainingMinutes = remainingSeconds / 60;
-    const remainingHours = remainingMinutes / 60;
-
-    const seconds = remainingSeconds % 60;
-    const minutes = remainingMinutes % 60;
-    const hours = remainingHours;
-
-    if (remainingMillis) {
-      setDisplay({
-        hours: Math.floor(hours),
-        minutes: Math.floor(minutes),
-        seconds: Math.floor(seconds),
-      });
-    } else {
-      setDisplay({
-        hours: Math.abs(Math.floor(hours)),
-        minutes: Math.abs(Math.floor(minutes)),
-        seconds: Math.abs(Math.floor(seconds)),
-      });
-    }
-  }, [remainingMillis]);
 
   return (
     <div className={Arrays.pack(className, Styles.Timer).join(' ')}>
@@ -243,10 +213,8 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
 
             <TimerDisplay
               className={Styles.Display}
-              hours={hours}
-              minutes={minutes}
-              seconds={seconds}
-              adjustRemainingMillis={adjustRemainingMillis}
+              remainingMillis={remainingMillis}
+              setRemainingMillis={setRemainingMillis}
             />
           </div>
         </div>
