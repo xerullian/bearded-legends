@@ -11,12 +11,12 @@ import WarTimer from './App/WarTimer/WarTimer';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/bearded-legends',
     element: <App />,
     errorElement: <RouterError />,
   },
   {
-    path: 'war-timer',
+    path: '/bearded-legends/war-timer',
     element: <WarTimer />,
   },
 ]);
