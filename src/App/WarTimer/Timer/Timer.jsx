@@ -84,6 +84,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     });
   };
 
+  // Restore all timers on render
   useEffect(() => {
     if (pauseTimestamp) {
       setRemainingMillis(endTimestamp - pauseTimestamp);
@@ -96,6 +97,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     }
   }, []);
 
+  // If the timer is active, update on every tick
   useEffect(() => {
     if (startTimestamp && !pauseTimestamp) {
       setRemainingMillis(endTimestamp - Date.now());
@@ -115,8 +117,8 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
       >
         <TimerLabel
           className={Styles.Label}
-          name={name}
           dataListId={nodeDataListId}
+          name={name}
           setName={setName}
         />
 
