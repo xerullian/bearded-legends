@@ -23,6 +23,8 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
 
         if (lag > 0) {
           delay -= 2 * lag;
+        } else {
+          delay -= lag;
         }
       }
     }

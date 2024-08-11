@@ -16,16 +16,8 @@
     color: var(--color-orange);
   }
 
-  .Expiring {
-    color: var(--color-red);
-  }
-
   .Expired {
     color: var(--color-red);
-
-    .Display {
-      @include Blink;
-    }
   }
 
   .Label {

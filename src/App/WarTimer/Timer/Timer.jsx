@@ -142,7 +142,8 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   }, [startTimestamp]);
 
   useEffect(() => {
-    const remainingSeconds = remainingMillis / 1000;
+    const _remainingMillis = Math.abs(remainingMillis);
+    const remainingSeconds = _remainingMillis / 1000;
     const remainingMinutes = remainingSeconds / 60;
     const remainingHours = remainingMinutes / 60;
 
@@ -150,14 +151,18 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
     const minutes = remainingMinutes % 60;
     const hours = remainingHours;
 
-    if (remainingMillis > 0) {
+    if (remainingMillis) {
       setDisplay({
         hours: Math.floor(hours),
         minutes: Math.floor(minutes),
         seconds: Math.floor(seconds),
       });
     } else {
-      setDisplay({ hours: 0, minutes: 0, seconds: 0 });
+      setDisplay({
+        hours: Math.abs(Math.floor(hours)),
+        minutes: Math.abs(Math.floor(minutes)),
+        seconds: Math.abs(Math.floor(seconds)),
+      });
     }
   }, [remainingMillis]);
 
@@ -169,7 +174,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
           startTimestamp && Styles.Started,
           !startTimestamp && Styles.Paused,
           remainingMillis < WARNING_REMAINING_MILLIS && Styles.Warning,
-          remainingMillis < EXPIRING_REMAINING_MILLIS && Styles.Expiring,
           remainingMillis < 0 && Styles.Expired,
         ).join(' ')}
       >
