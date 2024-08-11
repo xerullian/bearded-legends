@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
 import Logger from '@utils/Logger';
+import { useRef, useState } from 'react';
 
 export default function useInterval({ delay = 1000, strict = false } = {}) {
   const _logger = new Logger('useInterval');

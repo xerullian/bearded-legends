@@ -1,6 +1,5 @@
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
-import useInterval from '@hooks/useInterval';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';

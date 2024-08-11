@@ -1,5 +1,5 @@
+import Logger from '@utils/Logger';
 import { useEffect } from 'react';
-import Logger from '../utils/Logger';
 
 export default function useServiceWorker() {
   const logger = new Logger('userServiceWorker');
