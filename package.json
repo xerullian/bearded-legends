@@ -6,7 +6,7 @@
   "author": "Loopthing",
   "license": "ISC",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf docs",
     "start": "npx webpack serve --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "prettier": "npx prettier . --write",
