@@ -3,7 +3,6 @@ import TimerButton from '@components/IconButton';
 import SrOnly from '@components/SrOnly';
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
-import useInterval from '@hooks/useInterval';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
@@ -18,10 +17,15 @@ import TimerLabel from './TimerLabel';
 const DEFAULT_REMAINING_MILLIS = 1_800_000; //FIXME Repeated definition
 const WARNING_REMAINING_MILLIS = 240_000;
 
-export default function Timer({ className, nodeDataListId, timer, setTimer }) {
+export default function Timer({
+  className,
+  nodeDataListId,
+  tick,
+  timer,
+  setTimer,
+}) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(content);
-  const [tick, start, stop] = useInterval({ strict: true });
 
   const { name, startTimestamp, pauseTimestamp, endTimestamp } = timer;
 
@@ -34,46 +38,51 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   };
 
   const updateRemainingMillis = (newRemainingMillis) => {
-    setTimer({
-      ...timer,
-      endTimestamp: startTimestamp + newRemainingMillis,
-    });
+    const now = Date.now();
+
+    if (pauseTimestamp) {
+      setTimer({
+        ...timer,
+        pauseTimestamp: now,
+        endTimestamp: now + newRemainingMillis,
+      });
+    } else {
+      setTimer({
+        ...timer,
+        startTimestamp: now,
+        endTimestamp: now + newRemainingMillis,
+      });
+    }
 
     setRemainingMillis(newRemainingMillis);
   };
 
   const onClickStartButton = (_domEvent) => {
     const now = Date.now();
-    start();
 
     setTimer({
       ...timer,
       startTimestamp: now,
-      endTimestamp: now + endTimestamp,
+      endTimestamp: now + remainingMillis,
     });
   };
 
   const onClickPauseButton = (_domEvent) => {
-    stop();
     setTimer({ ...timer, pauseTimestamp: Date.now() });
   };
 
   const onClickResumeButton = (_domEvent) => {
     const now = Date.now();
-    const elapsed = now - pauseTimestamp;
 
     setTimer({
       ...timer,
       startTimestamp: now,
       pauseTimestamp: 0,
-      endTimestamp: endTimestamp + elapsed,
+      endTimestamp: now + remainingMillis,
     });
-
-    start();
   };
 
   const onClickResetButton = (_domEvent) => {
-    stop();
     setRemainingMillis(DEFAULT_REMAINING_MILLIS);
 
     setTimer({
@@ -90,10 +99,6 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
       setRemainingMillis(endTimestamp - pauseTimestamp);
     } else {
       setRemainingMillis(endTimestamp - startTimestamp);
-    }
-
-    if (startTimestamp && !pauseTimestamp) {
-      start();
     }
   }, []);
 

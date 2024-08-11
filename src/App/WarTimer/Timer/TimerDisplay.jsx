@@ -27,23 +27,18 @@ export default function TimerDisplay({
 
   useEffect(() => {
     const _remainingMillis = Math.abs(remainingMillis);
-    const remainingSeconds = _remainingMillis / 1000;
+
+    const remainingSeconds =
+      remainingMillis > 0
+        ? Math.ceil(_remainingMillis / 1000)
+        : Math.floor(_remainingMillis / 1000);
+
     const remainingMinutes = remainingSeconds / 60;
     const remainingHours = remainingMinutes / 60;
 
-    const seconds = (remainingSeconds | 0) % 60;
-    const minutes = (remainingMinutes | 0) % 60;
-    const hours = remainingHours | 0;
-
-    if (remainingMillis) {
-      setHours(hours);
-      setMinutes(minutes);
-      setSeconds(seconds);
-    } else {
-      setHours(Math.abs(hours));
-      setMinutes(Math.abs(minutes));
-      setSeconds(Math.abs(seconds));
-    }
+    setSeconds(Math.floor(remainingSeconds) % 60);
+    setMinutes(Math.floor(remainingMinutes) % 60);
+    setHours(Math.floor(remainingHours));
   }, [remainingMillis]);
 
   const onFocus = (domEvent) => {
@@ -73,6 +68,7 @@ export default function TimerDisplay({
   };
 
   const onSubmit = (domEvent) => {
+    domEvent.target.blur();
     onChange(domEvent);
 
     updateRemainingMillis(

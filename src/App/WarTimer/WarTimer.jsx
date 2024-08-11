@@ -1,14 +1,17 @@
 import Button from '@components/Button';
+import Card from '@components/Card';
 import content from '@content/Content.yaml';
 import useContentBundle from '@hooks/useContentBundle';
+import useInterval from '@hooks/useInterval';
+import { useLocalStorage } from '@hooks/useStorage';
 import * as Layout from '@styles/Layout.scss';
 import Arrays from '@utils/Arrays';
 import Logger from '@utils/Logger';
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import { PlusCircle } from 'react-bootstrap-icons';
 import { v4 as uuidv4 } from 'uuid';
-import Card from '../../components/Card';
-import { useLocalStorage } from '../../hooks/useStorage';
+
 import Clock from './Header/Clock';
 import NodeDataList from './NodeDataList';
 import Timer from './Timer/Timer';
@@ -19,6 +22,7 @@ const DEFAULT_REMAINING_MILLIS = 1_800_000;
 export default function WarTimer({ className }) {
   const _logger = new Logger('WarTimer');
   const b = useContentBundle(content);
+  const [tick, start, stop] = useInterval({ delay: 100, strict: true });
   const [timers, setTimers] = useLocalStorage('BL.WarTimer.Data', []);
 
   const onClickAddButton = (_domEvent) => {
@@ -34,6 +38,11 @@ export default function WarTimer({ className }) {
 
     setTimers(_timers);
   };
+
+  useEffect(() => {
+    start();
+    return () => stop();
+  }, []);
 
   return (
     <div className={Arrays.pack(className, Styles.GuildWars).join(' ')}>
@@ -53,7 +62,7 @@ export default function WarTimer({ className }) {
               Layout.NoWrap,
             ).join(' ')}
           >
-            <Clock className={Styles.Clock} />
+            <Clock className={Styles.Clock} tick={tick} />
           </div>
           <div className={Layout.TextCenter}>
             <b.GuildNameDecorative />
@@ -73,6 +82,7 @@ export default function WarTimer({ className }) {
           <li key={timer.uuid}>
             <Card className={Styles.Card}>
               <Timer
+                tick={tick}
                 timer={timer}
                 setTimer={(value) =>
                   // Replace the timer value that was updated by the caller.

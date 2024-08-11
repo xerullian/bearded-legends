@@ -6,16 +6,10 @@ import Logger from '@utils/Logger';
 import React, { useEffect, useState } from 'react';
 import * as Styles from './Clock.scss';
 
-export default function Clock({ className, timeZone = 'UTC' }) {
+export default function Clock({ className, tick, timeZone = 'UTC' }) {
   const _logger = new Logger('Clock');
   const _b = useContentBundle(content);
-  const [tick, start] = useInterval({ strict: true });
   const [clock, setClock] = useState({});
-
-  useEffect(() => {
-    start();
-    _logger.log('start');
-  }, []);
 
   useEffect(() => {
     const now = new Date();
