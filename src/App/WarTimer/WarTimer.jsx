@@ -30,7 +30,6 @@ export default function WarTimer({ className }) {
       startTimestamp: 0,
       pauseTimestamp: 0,
       endTimestamp: DEFAULT_REMAINING_MILLIS,
-      remainingMillis: DEFAULT_REMAINING_MILLIS,
     });
 
     setTimers(_timers);

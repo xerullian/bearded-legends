@@ -17,28 +17,40 @@ import TimerLabel from './TimerLabel';
 
 const DEFAULT_REMAINING_MILLIS = 1_800_000; //FIXME Repeated definition
 const WARNING_REMAINING_MILLIS = 240_000;
-const EXPIRING_REMAINING_MILLIS = 120_000;
 
 export default function Timer({ className, nodeDataListId, timer, setTimer }) {
   const _logger = new Logger('Timer');
   const b = useContentBundle(content);
   const [tick, start, stop] = useInterval({ strict: true });
 
-  const {
-    name,
-    startTimestamp,
-    pauseTimestamp,
-    endTimestamp,
-    remainingMillis,
-  } = timer;
+  const { name, startTimestamp, pauseTimestamp, endTimestamp } = timer;
+
+  const [remainingMillis, setRemainingMillis] = useState(
+    endTimestamp - startTimestamp,
+  );
 
   const setName = (name) => {
     setTimer({ ...timer, name });
   };
 
+  const updateRemainingMillis = (newRemainingMillis) => {
+    setTimer({
+      ...timer,
+      endTimestamp: startTimestamp + newRemainingMillis,
+    });
+
+    setRemainingMillis(newRemainingMillis);
+  };
+
   const onClickStartButton = (_domEvent) => {
+    const now = Date.now();
     start();
-    setTimer({ ...timer, startTimestamp: Date.now() });
+
+    setTimer({
+      ...timer,
+      startTimestamp: now,
+      endTimestamp: now + endTimestamp,
+    });
   };
 
   const onClickPauseButton = (_domEvent) => {
@@ -62,76 +74,33 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
 
   const onClickResetButton = (_domEvent) => {
     stop();
+    setRemainingMillis(DEFAULT_REMAINING_MILLIS);
 
     setTimer({
       ...timer,
       startTimestamp: 0,
       pauseTimestamp: 0,
       endTimestamp: DEFAULT_REMAINING_MILLIS,
-      remainingMillis: DEFAULT_REMAINING_MILLIS,
-    });
-  };
-
-  const onClickSuperButton = (domEvent) => {
-    if (remainingMillis < 0) {
-      onClickResetButton(domEvent);
-    } else if (pauseTimestamp) {
-      onClickResumeButton(domEvent);
-    } else if (!startTimestamp) {
-      onClickStartButton(domEvent);
-    } else if (!pauseTimestamp) {
-      onClickPauseButton(domEvent);
-    }
-  };
-
-  const setRemainingMillis = (newRemainingMillis) => {
-    const now = Date.now();
-
-    setTimer({
-      ...timer,
-      startTimestamp: now,
-      endTimestamp: now + newRemainingMillis,
-      remainingMillis: newRemainingMillis,
     });
   };
 
   useEffect(() => {
     if (pauseTimestamp) {
-      // Had the timer been paused prior to browser refresh, we should adjust
-      // the paused timing so that the start/pause timestamps are relevant.
-      const now = Date.now();
+      setRemainingMillis(endTimestamp - pauseTimestamp);
+    } else {
+      setRemainingMillis(endTimestamp - startTimestamp);
+    }
 
-      setTimer({
-        ...timer,
-        startTimestamp: now,
-        pauseTimestamp: now,
-        endTimestamp: endTimestamp + remainingMillis,
-      });
-
-      _logger.info('onStart: Pause', timer.uuid);
-    } else if (startTimestamp) {
-      // Had the timer been running when browser was refreshed, we should
-      // pick up where we originally left off.
+    if (startTimestamp && !pauseTimestamp) {
       start();
-      _logger.info('onStart: Start', timer.uuid);
     }
   }, []);
 
   useEffect(() => {
     if (startTimestamp && !pauseTimestamp) {
-      setTimer({
-        ...timer,
-        remainingMillis: endTimestamp - Date.now(),
-      });
+      setRemainingMillis(endTimestamp - Date.now());
     }
   }, [tick]);
-
-  useEffect(() => {
-    setTimer({
-      ...timer,
-      endTimestamp: startTimestamp + remainingMillis,
-    });
-  }, [startTimestamp]);
 
   return (
     <div className={Arrays.pack(className, Styles.Timer).join(' ')}>
@@ -166,37 +135,35 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
               Layout.NoWrap,
             ).join(' ')}
           >
-            <TimerButton onClick={onClickSuperButton}>
-              {remainingMillis < 0 ? (
-                <>
-                  <XCircle />
-                  <SrOnly>
-                    <b.ResetButtonLabel />
-                  </SrOnly>
-                </>
-              ) : pauseTimestamp ? (
-                <>
-                  <PlayCircle />
-                  <SrOnly>
-                    <b.ResumeButtonLabel />
-                  </SrOnly>
-                </>
-              ) : !startTimestamp ? (
-                <>
-                  <PlayCircle />
-                  <SrOnly>
-                    <b.StartButtonLabel />
-                  </SrOnly>
-                </>
-              ) : (
-                <>
-                  <PauseCircle />
-                  <SrOnly>
-                    <b.PauseButtonLabel />
-                  </SrOnly>
-                </>
-              )}
-            </TimerButton>
+            {remainingMillis < 0 ? (
+              <TimerButton onClick={onClickResetButton}>
+                <XCircle />
+                <SrOnly>
+                  <b.ResetButtonLabel />
+                </SrOnly>
+              </TimerButton>
+            ) : pauseTimestamp ? (
+              <TimerButton onClick={onClickResumeButton}>
+                <PlayCircle />
+                <SrOnly>
+                  <b.ResumeButtonLabel />
+                </SrOnly>
+              </TimerButton>
+            ) : !startTimestamp ? (
+              <TimerButton onClick={onClickStartButton}>
+                <PlayCircle />
+                <SrOnly>
+                  <b.StartButtonLabel />
+                </SrOnly>
+              </TimerButton>
+            ) : (
+              <TimerButton onClick={onClickPauseButton}>
+                <PauseCircle />
+                <SrOnly>
+                  <b.PauseButtonLabel />
+                </SrOnly>
+              </TimerButton>
+            )}
 
             <Animation
               display={remainingMillis > 0 && !!pauseTimestamp}
@@ -214,7 +181,7 @@ export default function Timer({ className, nodeDataListId, timer, setTimer }) {
             <TimerDisplay
               className={Styles.Display}
               remainingMillis={remainingMillis}
-              setRemainingMillis={setRemainingMillis}
+              updateRemainingMillis={updateRemainingMillis}
             />
           </div>
         </div>

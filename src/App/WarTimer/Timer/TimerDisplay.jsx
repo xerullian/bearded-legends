@@ -11,7 +11,7 @@ import * as Styles from './TimerDisplay.scss';
 export default function TimerDisplay({
   className,
   remainingMillis,
-  setRemainingMillis,
+  updateRemainingMillis,
 }) {
   const _logger = new Logger('TimerDisplay');
   const b = useContentBundle(content);
@@ -75,7 +75,7 @@ export default function TimerDisplay({
   const onSubmit = (domEvent) => {
     onChange(domEvent);
 
-    setRemainingMillis(
+    updateRemainingMillis(
       Number(hoursBuffer || 0) * 3_600_000 +
         Number(minutesBuffer || 0) * 60_000 +
         Number(secondsBuffer || 0) * 1_000,

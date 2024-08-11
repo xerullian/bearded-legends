@@ -21,7 +21,6 @@ export default function useInterval({ delay = 1000, strict = false } = {}) {
         tidRef.current = setTimeout(next, delay);
       }
     } finally {
-      _logger.debug(elapsed, lag);
       lastRef.current = now;
     }
   };
