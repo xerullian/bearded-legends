@@ -1,29 +1,29 @@
-@import '@styles/Color.scss';
-
-.App {
-  background-color: var(--color-black);
-  color: var(--color-white);
-  height: 100vh;
-
-  .Logo {
-    display: block;
-  }
-
-  a,
-  button {
-    margin-left: 1rem;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    // TODO Highlight external links
-    &[href^='http'] {
-      // border: 1px solid red;
-
-      &::after {
-        content: '';
-      }
-    }
-  }
-}
+//@import '@styles/Color.scss';
+//
+//.App {
+//  background-color: var(--color-black);
+//  color: var(--color-white);
+//  height: 100vh;
+//
+//  .Logo {
+//    display: block;
+//  }
+//
+//  a,
+//  button {
+//    margin-left: 1rem;
+//
+//    &:first-child {
+//      margin-left: 0;
+//    }
+//
+//    // TODO Highlight external links
+//    &[href^='http'] {
+//      // border: 1px solid red;
+//
+//      &::after {
+//        content: '';
+//      }
+//    }
+//  }
+//}
