@@ -98,6 +98,7 @@ export default function TimerDisplay({
               <input
                 type="text"
                 inputMode="numeric"
+                maxLength={String(hours).length}
                 pattern="[0-9]*"
                 value={hoursBuffer}
                 onChange={onChange}
@@ -126,6 +127,7 @@ export default function TimerDisplay({
           <input
             type="text"
             inputMode="numeric"
+            maxLength="2"
             pattern="[0-9]*"
             value={minutesBuffer}
             onChange={onChange}
@@ -151,6 +153,7 @@ export default function TimerDisplay({
           <input
             type="text"
             inputMode="numeric"
+            maxLength="2"
             pattern="[0-9]*"
             value={secondsBuffer}
             onChange={onChange}
